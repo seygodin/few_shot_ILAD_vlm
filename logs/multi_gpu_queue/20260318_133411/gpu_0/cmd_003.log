@@ -1,0 +1,2 @@
+[DRY RUN] gpu=0 (3/3)
+python train_hybrid.py --data_name screw_bag --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True

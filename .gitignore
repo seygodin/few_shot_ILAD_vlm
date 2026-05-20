@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Checkpoints (재현 가능)
+hybrid/PromptAD/result/**/checkpoint/
+
+# Logs (재현 가능)
+logs/gpu_*.log
+**/nohup.out
+
+# bpe vocab (오픈소스 라이브러리 파일)
+**/bpe_simple_vocab_16e6.txt.gz

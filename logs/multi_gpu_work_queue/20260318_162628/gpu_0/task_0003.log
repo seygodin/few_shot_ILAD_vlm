@@ -1,0 +1,5 @@
+[DRY RUN] gpu=0
+[TASK] 3/5
+[NAME] a
+[REPEAT] 3/3
+[COMMAND] python -c "print('A')"

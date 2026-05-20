@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-03-18 16:26:28",
+  "cwd": "/home/seungeon/Workspace/side/vlm",
+  "dry_run": 1,
+  "continue_on_error": 0,
+  "gpu_ids": [
+    0,
+    1
+  ],
+  "task_count": 5,
+  "config_path": "/tmp/run_multi_gpu_work_test.json",
+  "raw_config": {
+    "gpus": [
+      0,
+      1
+    ],
+    "tasks": [
+      {
+        "name": "a",
+        "command": "python -c \"print('A')\"",
+        "repeat": 3
+      },
+      {
+        "name": "b",
+        "command": "python -c \"print('B')\"",
+        "repeat": 2
+      }
+    ]
+  }
+}

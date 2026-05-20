@@ -1,0 +1,5 @@
+# CUDA_VISIBLE_DEVICES=2 CUDA_VISIBLE_DEVICES=2 python make_detection.py --model_name ViT-g-14 --pretrained_name laion2b_s12b_b42k --kernel_size 200 --stride 50 --overlap_count 12 --data_name breakfast
+# CUDA_VISIBLE_DEVICES=2 CUDA_VISIBLE_DEVICES=2 python make_detection.py --model_name ViT-g-14 --pretrained_name laion2b_s12b_b42k --kernel_size 200 --stride 50 --overlap_count 12 --data_name screw_bag
+
+CUDA_VISIBLE_DEVICES=2 CUDA_VISIBLE_DEVICES=2 python make_detection.py --gpu_number 2 --model_name ViT-g-14 --pretrained_name laion2b_s12b_b42k --kernel_size 200 --stride 50 --overlap_count 12 --data_name cable
+CUDA_VISIBLE_DEVICES=2 CUDA_VISIBLE_DEVICES=2 python make_detection.py --gpu_number 2 --model_name ViT-g-14 --pretrained_name laion2b_s12b_b42k --kernel_size 200 --stride 50 --overlap_count 12 --data_name pcb3

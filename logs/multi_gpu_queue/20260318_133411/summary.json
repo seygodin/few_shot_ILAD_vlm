@@ -1,0 +1,46 @@
+[
+  {
+    "gpu_id": 0,
+    "cmd_index": 1,
+    "total_cmds": 3,
+    "command": "python train_hybrid.py --data_name screw_bag --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+    "return_code": 0,
+    "elapsed_sec": 0.001,
+    "log_path": "logs/multi_gpu_queue/20260318_133411/gpu_0/cmd_001.log",
+    "started_at": "2026-03-18 13:34:11",
+    "dry_run": 1
+  },
+  {
+    "gpu_id": 0,
+    "cmd_index": 2,
+    "total_cmds": 3,
+    "command": "python train_hybrid.py --data_name screw_bag --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "log_path": "logs/multi_gpu_queue/20260318_133411/gpu_0/cmd_002.log",
+    "started_at": "2026-03-18 13:34:11",
+    "dry_run": 1
+  },
+  {
+    "gpu_id": 0,
+    "cmd_index": 3,
+    "total_cmds": 3,
+    "command": "python train_hybrid.py --data_name screw_bag --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "log_path": "logs/multi_gpu_queue/20260318_133411/gpu_0/cmd_003.log",
+    "started_at": "2026-03-18 13:34:11",
+    "dry_run": 1
+  },
+  {
+    "gpu_id": 1,
+    "cmd_index": 1,
+    "total_cmds": 1,
+    "command": "python train_hybrid.py --data_name breakfast --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "log_path": "logs/multi_gpu_queue/20260318_133411/gpu_1/cmd_001.log",
+    "started_at": "2026-03-18 13:34:11",
+    "dry_run": 1
+  }
+]

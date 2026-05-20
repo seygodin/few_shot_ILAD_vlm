@@ -1,0 +1,44 @@
+[
+  {
+    "task_id": 1,
+    "task_name": "legacy_1",
+    "base_index": 1,
+    "repeat_index": 1,
+    "repeat_total": 2,
+    "gpu_id": 0,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:27:06",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162706/gpu_0/task_0001.log",
+    "command": "python -c \"print('L0')\""
+  },
+  {
+    "task_id": 2,
+    "task_name": "legacy_1",
+    "base_index": 1,
+    "repeat_index": 2,
+    "repeat_total": 2,
+    "gpu_id": 1,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:27:06",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162706/gpu_1/task_0002.log",
+    "command": "python -c \"print('L0')\""
+  },
+  {
+    "task_id": 3,
+    "task_name": "legacy_2",
+    "base_index": 2,
+    "repeat_index": 1,
+    "repeat_total": 1,
+    "gpu_id": 1,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:27:06",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162706/gpu_1/task_0003.log",
+    "command": "python -c \"print('L1')\""
+  }
+]

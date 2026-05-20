@@ -1,0 +1,431 @@
+[START] 2026-03-18 18:41:25
+[GPU] 1
+[TASK] 100/120
+[NAME] orange_juice_promptad
+[REPEAT] 10/10
+[COMMAND] python train_hybrid.py --data_name orange_juice --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True
+
+/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/seungeon/Workspace/side/vlm/train_hybrid.py:18: DeprecationWarning: The distutils package is deprecated and slated for removal in Python 3.12. Use setuptools or check PEP 632 for potential alternatives
+  from distutils.util import strtobool
+Torch version: 2.9.1+cu128
+cuda is loaded for process
+here?
+In my local computer
+Namespace(epoch=100, gpu_number='0', data_name='orange_juice', lr=0.0005, batch_size=6, shuffle=True, seed=0, tag='default', model_name='ViT-B-32', pretrained_name='laion2b_s34b_b79k', lora=1, default=False, foundation='CLIP', detection=1, preprocess=1, num_rule=0, object_names=['a orange picture label', 'a 100% text label', 'a bottle cap', 'a black background'], objects_for_rules=[['a orange picture label'], ['a orange picture label', 'a 100% text label'], ['a orange picture label'], ['a 100% text label'], ['a orange picture label', 'a 100% text label']], texts_for_rules=[['a photo of orange picture label'], ['a photo of orange picture label and 100% text label'], ['a photo of orange picture label'], ['a photo of 100% text label'], ['a photo of orange picture label and 100% text label']], mask=1, text=1, score='mean', ciriculam_learning=False, few_shot=1, shot=1, log=1, neg_loss=0, double_encoder=1, pretrained_count_path=None, ris=0, rule_select='', rule_list=[], num_negative=5, hybrid_model='promptad', hybrid_weight=0.3, hybrid_class_name='', hybrid_batch_size=16, hybrid_backbone='ViT-B-16-plus-240', hybrid_pretrained_dataset='laion400m_e32', hybrid_scales=[2, 3], hybrid_img_resize=240, hybrid_img_cropsize=240, hybrid_resolution=400, hybrid_promptad_epoch=100, hybrid_promptad_lr=0.002, hybrid_promptad_momentum=0.9, hybrid_promptad_weight_decay=0.0005, hybrid_promptad_eta_min=1e-05, hybrid_promptad_lambda1=0.001, hybrid_promptad_n_ctx=4, hybrid_promptad_n_pro=3, hybrid_promptad_n_ctx_ab=1, hybrid_promptad_n_pro_ab=4, early_stop_k=10, result_log_path='./results/train_hybrid_result.csv')
+[Hybrid] method=promptad, class_name=juice_bottle, train=1, eval=78, base_path=/data3/seungeon/data/image/mvtec_loco_anomaly_detection/orange_juice
+[Hybrid-only] LA_AUC=0.83990, LA_AUPRC=0.70185, LA_F1=0.76316
+[Data Description]
+- Train: 1
+- Test: 78
+
+Train Start
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.37509
+[Test AUPRC]  -  LA: 0.29102
+[Test F1-max]  -  LA: 0.55238
+Epoch: 0 | Loss: 6.744466304779053  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.38705
+[Test AUPRC]  -  LA: 0.29516
+[Test F1-max]  -  LA: 0.55769
+Epoch: 1 | Loss: 6.670648097991943  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.50457
+[Test AUPRC]  -  LA: 0.34683
+[Test F1-max]  -  LA: 0.58586
+Epoch: 2 | Loss: 5.634998321533203  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.63688
+[Test AUPRC]  -  LA: 0.43274
+[Test F1-max]  -  LA: 0.65169
+Epoch: 3 | Loss: 4.161777496337891  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.73329
+[Test AUPRC]  -  LA: 0.51515
+[Test F1-max]  -  LA: 0.69136
+Epoch: 4 | Loss: 2.714289665222168  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.76777
+[Test AUPRC]  -  LA: 0.59926
+[Test F1-max]  -  LA: 0.70732
+Epoch: 5 | Loss: 1.6886608600616455  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.63934
+[Test F1-max]  -  LA: 0.70732
+Epoch: 6 | Loss: 1.0141220092773438  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79662
+[Test AUPRC]  -  LA: 0.65220
+[Test F1-max]  -  LA: 0.69048
+Epoch: 7 | Loss: 0.5676273107528687  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80225
+[Test AUPRC]  -  LA: 0.65972
+[Test F1-max]  -  LA: 0.69136
+Epoch: 8 | Loss: 0.2960226237773895  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80788
+[Test AUPRC]  -  LA: 0.68345
+[Test F1-max]  -  LA: 0.69880
+Epoch: 9 | Loss: 0.15275201201438904  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80296
+[Test AUPRC]  -  LA: 0.68472
+[Test F1-max]  -  LA: 0.69880
+Epoch: 10 | Loss: 0.07946401089429855  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80296
+[Test AUPRC]  -  LA: 0.68128
+[Test F1-max]  -  LA: 0.69880
+Epoch: 11 | Loss: 0.04215783253312111  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80507
+[Test AUPRC]  -  LA: 0.68082
+[Test F1-max]  -  LA: 0.69880
+Epoch: 12 | Loss: 0.023228365927934647  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80155
+[Test AUPRC]  -  LA: 0.66462
+[Test F1-max]  -  LA: 0.69880
+Epoch: 13 | Loss: 0.013121051713824272  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.80155
+[Test AUPRC]  -  LA: 0.66882
+[Test F1-max]  -  LA: 0.70732
+Epoch: 14 | Loss: 0.007596150040626526  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79662
+[Test AUPRC]  -  LA: 0.65273
+[Test F1-max]  -  LA: 0.70732
+Epoch: 15 | Loss: 0.004512125626206398  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79310
+[Test AUPRC]  -  LA: 0.64275
+[Test F1-max]  -  LA: 0.70886
+Epoch: 16 | Loss: 0.0027332957834005356  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.63438
+[Test F1-max]  -  LA: 0.70886
+Epoch: 17 | Loss: 0.0016873497515916824  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.62415
+[Test F1-max]  -  LA: 0.70886
+Epoch: 18 | Loss: 0.0010651544434949756  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.61347
+[Test F1-max]  -  LA: 0.70886
+Epoch: 19 | Loss: 0.0006883395835757256  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.61298
+[Test F1-max]  -  LA: 0.70886
+Epoch: 20 | Loss: 0.0004536685300990939  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78044
+[Test AUPRC]  -  LA: 0.61494
+[Test F1-max]  -  LA: 0.70886
+Epoch: 21 | Loss: 0.0003044410259462893  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78184
+[Test AUPRC]  -  LA: 0.61478
+[Test F1-max]  -  LA: 0.70886
+Epoch: 22 | Loss: 0.0002081301063299179  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78395
+[Test AUPRC]  -  LA: 0.61923
+[Test F1-max]  -  LA: 0.70886
+Epoch: 23 | Loss: 0.00014471547910943627  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78395
+[Test AUPRC]  -  LA: 0.61848
+[Test F1-max]  -  LA: 0.70886
+Epoch: 24 | Loss: 0.0001025176388793625  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78395
+[Test AUPRC]  -  LA: 0.61848
+[Test F1-max]  -  LA: 0.70886
+Epoch: 25 | Loss: 7.402772462228313e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.61434
+[Test F1-max]  -  LA: 0.70886
+Epoch: 26 | Loss: 5.4358755733119324e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77903
+[Test AUPRC]  -  LA: 0.60970
+[Test F1-max]  -  LA: 0.70886
+Epoch: 27 | Loss: 4.088840069016442e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77903
+[Test AUPRC]  -  LA: 0.60794
+[Test F1-max]  -  LA: 0.70886
+Epoch: 28 | Loss: 3.0994189728517085e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77903
+[Test AUPRC]  -  LA: 0.60770
+[Test F1-max]  -  LA: 0.70886
+Epoch: 29 | Loss: 2.4080140065052547e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77903
+[Test AUPRC]  -  LA: 0.60770
+[Test F1-max]  -  LA: 0.70886
+Epoch: 30 | Loss: 1.907339901663363e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77833
+[Test AUPRC]  -  LA: 0.60732
+[Test F1-max]  -  LA: 0.70732
+Epoch: 31 | Loss: 1.5258733583323192e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78044
+[Test AUPRC]  -  LA: 0.60893
+[Test F1-max]  -  LA: 0.70732
+Epoch: 32 | Loss: 1.2278520443942398e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77833
+[Test AUPRC]  -  LA: 0.60732
+[Test F1-max]  -  LA: 0.70732
+Epoch: 33 | Loss: 1.0132765055459458e-05  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77833
+[Test AUPRC]  -  LA: 0.60276
+[Test F1-max]  -  LA: 0.70732
+Epoch: 34 | Loss: 8.344632988155354e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77833
+[Test AUPRC]  -  LA: 0.60276
+[Test F1-max]  -  LA: 0.70732
+Epoch: 35 | Loss: 7.03333580531762e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77903
+[Test AUPRC]  -  LA: 0.60191
+[Test F1-max]  -  LA: 0.70732
+Epoch: 36 | Loss: 6.079664672142826e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77833
+[Test AUPRC]  -  LA: 0.60102
+[Test F1-max]  -  LA: 0.70732
+Epoch: 37 | Loss: 5.125993084220681e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.77973
+[Test AUPRC]  -  LA: 0.60113
+[Test F1-max]  -  LA: 0.70732
+Epoch: 38 | Loss: 4.529948000708828e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.60261
+[Test F1-max]  -  LA: 0.70732
+Epoch: 39 | Loss: 4.0531117520004045e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78044
+[Test AUPRC]  -  LA: 0.60058
+[Test F1-max]  -  LA: 0.70732
+Epoch: 40 | Loss: 3.5762755032919813e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.60170
+[Test F1-max]  -  LA: 0.70732
+Epoch: 41 | Loss: 3.2186485441343393e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.60170
+[Test F1-max]  -  LA: 0.70732
+Epoch: 42 | Loss: 2.980229965032777e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78114
+[Test AUPRC]  -  LA: 0.60170
+[Test F1-max]  -  LA: 0.70732
+Epoch: 43 | Loss: 2.741811840678565e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78184
+[Test AUPRC]  -  LA: 0.60280
+[Test F1-max]  -  LA: 0.70732
+Epoch: 44 | Loss: 2.5033937163243536e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78184
+[Test AUPRC]  -  LA: 0.60280
+[Test F1-max]  -  LA: 0.70732
+Epoch: 45 | Loss: 2.3841844267735723e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78184
+[Test AUPRC]  -  LA: 0.60280
+[Test F1-max]  -  LA: 0.70732
+Epoch: 46 | Loss: 2.1457660750456853e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78255
+[Test AUPRC]  -  LA: 0.60334
+[Test F1-max]  -  LA: 0.70732
+Epoch: 47 | Loss: 2.0265570128685795e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78325
+[Test AUPRC]  -  LA: 0.60442
+[Test F1-max]  -  LA: 0.70732
+Epoch: 48 | Loss: 1.788138433767017e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78325
+[Test AUPRC]  -  LA: 0.60442
+[Test F1-max]  -  LA: 0.70732
+Epoch: 49 | Loss: 1.6689293715899112e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60602
+[Test F1-max]  -  LA: 0.70732
+Epoch: 50 | Loss: 1.6689293715899112e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60602
+[Test F1-max]  -  LA: 0.70732
+Epoch: 51 | Loss: 1.5497201957259676e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60660
+[Test F1-max]  -  LA: 0.70732
+Epoch: 52 | Loss: 1.5497201957259676e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60660
+[Test F1-max]  -  LA: 0.70732
+Epoch: 53 | Loss: 1.4305110198620241e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60660
+[Test F1-max]  -  LA: 0.70732
+Epoch: 54 | Loss: 1.4305110198620241e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60660
+[Test F1-max]  -  LA: 0.70732
+Epoch: 55 | Loss: 1.4305110198620241e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78501
+[Test AUPRC]  -  LA: 0.60624
+[Test F1-max]  -  LA: 0.70732
+Epoch: 56 | Loss: 1.3113018439980806e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60587
+[Test F1-max]  -  LA: 0.70732
+Epoch: 57 | Loss: 1.1920925544472993e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60587
+[Test F1-max]  -  LA: 0.70732
+Epoch: 58 | Loss: 1.1920925544472993e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60587
+[Test F1-max]  -  LA: 0.70732
+Epoch: 59 | Loss: 1.1920925544472993e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60587
+[Test F1-max]  -  LA: 0.70732
+Epoch: 60 | Loss: 1.1920925544472993e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60666
+[Test F1-max]  -  LA: 0.70732
+Epoch: 61 | Loss: 1.072883264896518e-06  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60752
+[Test F1-max]  -  LA: 0.70732
+Epoch: 62 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60752
+[Test F1-max]  -  LA: 0.70732
+Epoch: 63 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60752
+[Test F1-max]  -  LA: 0.70732
+Epoch: 64 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78466
+[Test AUPRC]  -  LA: 0.60698
+[Test F1-max]  -  LA: 0.70732
+Epoch: 65 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60786
+[Test F1-max]  -  LA: 0.70732
+Epoch: 66 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60786
+[Test F1-max]  -  LA: 0.70732
+Epoch: 67 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78536
+[Test AUPRC]  -  LA: 0.60786
+[Test F1-max]  -  LA: 0.70732
+Epoch: 68 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78607
+[Test AUPRC]  -  LA: 0.60873
+[Test F1-max]  -  LA: 0.70732
+Epoch: 69 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78747
+[Test AUPRC]  -  LA: 0.60994
+[Test F1-max]  -  LA: 0.70732
+Epoch: 70 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78677
+[Test AUPRC]  -  LA: 0.60926
+[Test F1-max]  -  LA: 0.70732
+Epoch: 71 | Loss: 9.536740890325746e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78747
+[Test AUPRC]  -  LA: 0.61023
+[Test F1-max]  -  LA: 0.70732
+Epoch: 72 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78747
+[Test AUPRC]  -  LA: 0.61023
+[Test F1-max]  -  LA: 0.70732
+Epoch: 73 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78747
+[Test AUPRC]  -  LA: 0.61023
+[Test F1-max]  -  LA: 0.70732
+Epoch: 74 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 75 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 76 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 77 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 78 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 79 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78818
+[Test AUPRC]  -  LA: 0.61090
+[Test F1-max]  -  LA: 0.70732
+Epoch: 80 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78888
+[Test AUPRC]  -  LA: 0.61144
+[Test F1-max]  -  LA: 0.70732
+Epoch: 81 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78888
+[Test AUPRC]  -  LA: 0.61144
+[Test F1-max]  -  LA: 0.70732
+Epoch: 82 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.78958
+[Test AUPRC]  -  LA: 0.61238
+[Test F1-max]  -  LA: 0.70732
+Epoch: 83 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 84 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 85 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 86 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 87 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 88 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 89 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 90 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61364
+[Test F1-max]  -  LA: 0.70732
+Epoch: 91 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79099
+[Test AUPRC]  -  LA: 0.61513
+[Test F1-max]  -  LA: 0.70732
+Epoch: 92 | Loss: 8.344648563252122e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79099
+[Test AUPRC]  -  LA: 0.61513
+[Test F1-max]  -  LA: 0.70732
+Epoch: 93 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79099
+[Test AUPRC]  -  LA: 0.61513
+[Test F1-max]  -  LA: 0.70732
+Epoch: 94 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79099
+[Test AUPRC]  -  LA: 0.61513
+[Test F1-max]  -  LA: 0.70732
+Epoch: 95 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79099
+[Test AUPRC]  -  LA: 0.61513
+[Test F1-max]  -  LA: 0.70732
+Epoch: 96 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61446
+[Test F1-max]  -  LA: 0.70732
+Epoch: 97 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61446
+[Test F1-max]  -  LA: 0.70732
+Epoch: 98 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+[Test ROC-AUC]  -  SA: 0.00000,  LA: 0.79029
+[Test AUPRC]  -  LA: 0.61446
+[Test F1-max]  -  LA: 0.70732
+Epoch: 99 | Loss: 7.152556236178498e-07  | Negative Loss: 0.0
+Time consumption: 87.95007133483887
+Best LA AUC: 0.8078817733990148
+Best LA AUPC: 0.684715564752811
+Best LA F1-max: 0.7088607594936709
+[Result] Experiment result appended to ./results/train_hybrid_result.csv
+
+[END] 2026-03-18 18:44:15
+[RETURN CODE] 0

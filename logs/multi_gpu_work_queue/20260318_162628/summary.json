@@ -1,0 +1,72 @@
+[
+  {
+    "task_id": 1,
+    "task_name": "a",
+    "base_index": 1,
+    "repeat_index": 1,
+    "repeat_total": 3,
+    "gpu_id": 0,
+    "return_code": 0,
+    "elapsed_sec": 0.001,
+    "started_at": "2026-03-18 16:26:28",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0001.log",
+    "command": "python -c \"print('A')\""
+  },
+  {
+    "task_id": 2,
+    "task_name": "a",
+    "base_index": 1,
+    "repeat_index": 2,
+    "repeat_total": 3,
+    "gpu_id": 1,
+    "return_code": 0,
+    "elapsed_sec": 0.001,
+    "started_at": "2026-03-18 16:26:28",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162628/gpu_1/task_0002.log",
+    "command": "python -c \"print('A')\""
+  },
+  {
+    "task_id": 3,
+    "task_name": "a",
+    "base_index": 1,
+    "repeat_index": 3,
+    "repeat_total": 3,
+    "gpu_id": 0,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:26:28",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0003.log",
+    "command": "python -c \"print('A')\""
+  },
+  {
+    "task_id": 4,
+    "task_name": "b",
+    "base_index": 2,
+    "repeat_index": 1,
+    "repeat_total": 2,
+    "gpu_id": 1,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:26:28",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162628/gpu_1/task_0004.log",
+    "command": "python -c \"print('B')\""
+  },
+  {
+    "task_id": 5,
+    "task_name": "b",
+    "base_index": 2,
+    "repeat_index": 2,
+    "repeat_total": 2,
+    "gpu_id": 0,
+    "return_code": 0,
+    "elapsed_sec": 0.0,
+    "started_at": "2026-03-18 16:26:28",
+    "dry_run": 1,
+    "log_path": "logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0005.log",
+    "command": "python -c \"print('B')\""
+  }
+]

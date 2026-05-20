@@ -1,0 +1,6 @@
+task_id,task_name,base_index,repeat_index,repeat_total,gpu_id,return_code,elapsed_sec,started_at,dry_run,log_path,command
+1,a,1,1,3,0,0,0.001,2026-03-18 16:26:28,1,logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0001.log,"python -c ""print('A')"""
+2,a,1,2,3,1,0,0.001,2026-03-18 16:26:28,1,logs/multi_gpu_work_queue/20260318_162628/gpu_1/task_0002.log,"python -c ""print('A')"""
+3,a,1,3,3,0,0,0.0,2026-03-18 16:26:28,1,logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0003.log,"python -c ""print('A')"""
+4,b,2,1,2,1,0,0.0,2026-03-18 16:26:28,1,logs/multi_gpu_work_queue/20260318_162628/gpu_1/task_0004.log,"python -c ""print('B')"""
+5,b,2,2,2,0,0,0.0,2026-03-18 16:26:28,1,logs/multi_gpu_work_queue/20260318_162628/gpu_0/task_0005.log,"python -c ""print('B')"""

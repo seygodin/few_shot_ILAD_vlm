@@ -1,0 +1,5 @@
+[DRY RUN] gpu=1
+[TASK] 3/3
+[NAME] legacy_2
+[REPEAT] 1/1
+[COMMAND] python -c "print('L1')"

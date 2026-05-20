@@ -1,0 +1,4 @@
+task_id,task_name,base_index,repeat_index,repeat_total,gpu_id,return_code,elapsed_sec,started_at,dry_run,log_path,command
+1,legacy_1,1,1,2,0,0,0.0,2026-03-18 16:27:06,1,logs/multi_gpu_work_queue/20260318_162706/gpu_0/task_0001.log,"python -c ""print('L0')"""
+2,legacy_1,1,2,2,1,0,0.0,2026-03-18 16:27:06,1,logs/multi_gpu_work_queue/20260318_162706/gpu_1/task_0002.log,"python -c ""print('L0')"""
+3,legacy_2,2,1,1,1,0,0.0,2026-03-18 16:27:06,1,logs/multi_gpu_work_queue/20260318_162706/gpu_1/task_0003.log,"python -c ""print('L1')"""

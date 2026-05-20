@@ -1,0 +1,34 @@
+[START] 2026-03-18 16:34:14
+[GPU] 2
+[TASK] 3/180
+[NAME] legacy_1
+[REPEAT] 3/10
+[COMMAND] python train_hybrid.py --data_name breakfast --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True
+
+Traceback (most recent call last):
+  File "/home/seungeon/Workspace/side/vlm/train_hybrid.py", line 11, in <module>
+    from ad_clip.model import get_model
+  File "/home/seungeon/Workspace/side/vlm/ad_clip/model.py", line 5, in <module>
+    from . import my_clip
+  File "/home/seungeon/Workspace/side/vlm/ad_clip/my_clip/__init__.py", line 1, in <module>
+    from .coca_model import CoCa
+  File "/home/seungeon/Workspace/side/vlm/ad_clip/my_clip/coca_model.py", line 15, in <module>
+    from .model import CLIPTextCfg, CLIPVisionCfg, _build_vision_tower, _build_text_tower
+  File "/home/seungeon/Workspace/side/vlm/ad_clip/my_clip/model.py", line 18, in <module>
+    from .hf_model import HFTextEncoder
+  File "/home/seungeon/Workspace/side/vlm/ad_clip/my_clip/hf_model.py", line 12, in <module>
+    import transformers
+  File "/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/transformers/__init__.py", line 958, in <module>
+    import_structure = define_import_structure(Path(__file__).parent / "models", prefix="models")
+  File "/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 2867, in define_import_structure
+    import_structure = create_import_structure_from_path(module_path)
+  File "/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 2580, in create_import_structure_from_path
+    import_structure[f] = create_import_structure_from_path(os.path.join(module_path, f))
+  File "/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 2703, in create_import_structure_from_path
+    for _all_object in fetch__all__(file_content):
+  File "/home/seungeon/miniconda3/envs/LAB/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 2473, in fetch__all__
+    def fetch__all__(file_content) -> list[str]:
+KeyboardInterrupt
+
+[END] 2026-03-18 16:34:19
+[RETURN CODE] 1

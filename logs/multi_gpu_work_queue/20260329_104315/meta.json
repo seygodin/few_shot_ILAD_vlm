@@ -1,0 +1,164 @@
+{
+  "created_at": "2026-03-29 10:43:15",
+  "cwd": "/home/seungeon/Workspace/side/vlm",
+  "dry_run": 0,
+  "continue_on_error": 0,
+  "gpu_ids": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "task_count": 150,
+  "config_path": "run_multi_gpu_work_config.json",
+  "raw_config": {
+    "gpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "tasks": [
+      {
+        "name": "cable_promptad",
+        "command": "python train_hybrid.py --data_name cable --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "cable_winclip",
+        "command": "python train_hybrid.py --data_name cable --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 10
+      },
+      {
+        "name": "cable_promptad",
+        "command": "python train_hybrid.py --data_name cable --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "cable_winclip",
+        "command": "python train_hybrid.py --data_name cable --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "capsule_promptad",
+        "command": "python train_hybrid.py --data_name capsule --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "capsule_winclip",
+        "command": "python train_hybrid.py --data_name capsule --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 10
+      },
+      {
+        "name": "capsule_promptad",
+        "command": "python train_hybrid.py --data_name capsule --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "capsule_winclip",
+        "command": "python train_hybrid.py --data_name capsule --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "transistor_promptad",
+        "command": "python train_hybrid.py --data_name transistor --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "transistor_winclip",
+        "command": "python train_hybrid.py --data_name transistor --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "transistor_promptad",
+        "command": "python train_hybrid.py --data_name transistor --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "transistor_winclip",
+        "command": "python train_hybrid.py --data_name transistor --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb1_promptad",
+        "command": "python train_hybrid.py --data_name pcb1 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb1_winclip",
+        "command": "python train_hybrid.py --data_name pcb1 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb1_promptad",
+        "command": "python train_hybrid.py --data_name pcb1 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb1_winclip",
+        "command": "python train_hybrid.py --data_name pcb1 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb2_promptad",
+        "command": "python train_hybrid.py --data_name pcb2 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb2_winclip",
+        "command": "python train_hybrid.py --data_name pcb2 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb2_promptad",
+        "command": "python train_hybrid.py --data_name pcb2 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb2_winclip",
+        "command": "python train_hybrid.py --data_name pcb2 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb3_promptad",
+        "command": "python train_hybrid.py --data_name pcb3 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb3_winclip",
+        "command": "python train_hybrid.py --data_name pcb3 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb3_promptad",
+        "command": "python train_hybrid.py --data_name pcb3 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb3_winclip",
+        "command": "python train_hybrid.py --data_name pcb3 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb4_promptad",
+        "command": "python train_hybrid.py --data_name pcb4 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb4_winclip",
+        "command": "python train_hybrid.py --data_name pcb4 --mask True --text True --double_encoder True --few_shot True --shot 1 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb4_promptad",
+        "command": "python train_hybrid.py --data_name pcb4 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model promptad --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      },
+      {
+        "name": "pcb4_winclip",
+        "command": "python train_hybrid.py --data_name pcb4 --mask True --text True --double_encoder True --few_shot True --shot 5 --hybrid_model winclip --hybrid_weight 0.3 --hybrid_batch_size 16 --epoch 100 --log True --lr 5e-4 --detection True --preprocess True",
+        "repeat": 5
+      }
+    ]
+  }
+}
