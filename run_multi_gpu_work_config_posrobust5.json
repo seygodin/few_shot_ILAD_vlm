@@ -1,0 +1,190 @@
+{
+  "gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "tasks": [
+    {
+      "name": "posrobust_juice_bot_original_seed0",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_original_seed7",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_original_seed42",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_original_seed123",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_vague_seed0",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_vague_seed7",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_vague_seed42",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_vague_seed123",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_paraphrase_seed0",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_paraphrase_seed7",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_paraphrase_seed42",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_juice_bot_paraphrase_seed123",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_original_seed0",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_original_seed7",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_original_seed42",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_original_seed123",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_vague_seed0",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_vague_seed7",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_vague_seed42",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_vague_seed123",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_paraphrase_seed0",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_paraphrase_seed7",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_paraphrase_seed42",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_pushpins_paraphrase_seed123",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_original_seed0",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_original_seed7",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_original_seed42",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_original_seed123",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type original --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_vague_seed0",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_vague_seed7",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_vague_seed42",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_vague_seed123",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type vague --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_paraphrase_seed0",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 0 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_paraphrase_seed7",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 7 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_paraphrase_seed42",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 42 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "posrobust_screw_bag_paraphrase_seed123",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model none --shot 5 --seed 123 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --beta_mask 0.5 --beta_text 0.5 --pos_rule_type paraphrase --neg_rule_type original --num_negative 5 --tag posrobust5 --result_log_path results/train_hybrid_posrobust5_result.csv",
+      "repeat": 1
+    }
+  ]
+}

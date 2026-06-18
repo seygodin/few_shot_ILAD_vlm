@@ -152,6 +152,11 @@ def append_experiment_result(args, result_dict, hybrid_only_result=None):
         "shot",
         "hybrid_model",
         "hybrid_weight",
+        "beta_mask",
+        "beta_text",
+        "pos_rule_type",
+        "neg_rule_type",
+        "num_negative",
         "best_la_auc",
         "best_la_aupc",
         "best_la_f1",
@@ -179,6 +184,11 @@ def append_experiment_result(args, result_dict, hybrid_only_result=None):
         "shot": args.shot,
         "hybrid_model": args.hybrid_model,
         "hybrid_weight": args.hybrid_weight,
+        "beta_mask": args.beta_mask,
+        "beta_text": args.beta_text,
+        "pos_rule_type": args.pos_rule_type,
+        "neg_rule_type": args.neg_rule_type,
+        "num_negative": args.num_negative,
         "best_la_auc": result_dict["best_la_auc"],
         "best_la_aupc": result_dict["best_la_aupc"],
         "best_la_f1": result_dict["best_la_f1"],
@@ -553,7 +563,7 @@ def evaluate(args, model, tokenizer, pairs, test_good_dataset, test_sa_dataset, 
             local_text = tokenizer(args.texts_for_rules[rule_idx]).to(device)
             global_text_feature = model.encode_text(pair)
             local_text_feature = model.encode_text(local_text)
-            text_features = (global_text_feature + local_text_feature)
+            text_features = ((1.0 - args.beta_text) * global_text_feature + args.beta_text * local_text_feature)
             text_feature_list.append(text_features)
         else:
             text_features = model.encode_text(pair)
@@ -582,11 +592,12 @@ def evaluate(args, model, tokenizer, pairs, test_good_dataset, test_sa_dataset, 
                     #maksed_sa_img_features = model.encode_image(test_sa_dataset[:len(test_sa_dataset)][1][:,rule_idx,:,:,:].squeeze(1))
 
                     maksed_la_img_features = model.encode_mask_image(test_la_dataset[:len(test_la_dataset)][1][:,rule_idx,:,:,:].squeeze(1))
-                good_img_features = (global_good_img_features + maksed_good_img_features)
+                good_img_features = ((1.0 - args.beta_mask) * global_good_img_features + args.beta_mask * maksed_good_img_features)
                 #sa_img_features = (sa_img_features + maksed_sa_img_features)/2
-                la_img_features = (global_la_img_features + maksed_la_img_features)
+                la_img_features = ((1.0 - args.beta_mask) * global_la_img_features + args.beta_mask * maksed_la_img_features)
             else:
-                pass
+                good_img_features = global_good_img_features
+                la_img_features = global_la_img_features
 
         elif args.detection ==1 and args.ris == 1:
             if args.mask == 1:
@@ -599,11 +610,12 @@ def evaluate(args, model, tokenizer, pairs, test_good_dataset, test_sa_dataset, 
                     maksed_good_img_features = model.encode_mask_image(test_good_dataset[:len(test_good_dataset)][1][:,rule_idx,:,:,:].squeeze(1))
                     #maksed_sa_img_features = model.encode_image(test_sa_dataset[:len(test_sa_dataset)][1][:,rule_idx,:,:,:].squeeze(1))
                     maksed_la_img_features = model.encode_mask_image(test_la_dataset[:len(test_la_dataset)][1][:,rule_idx,:,:,:].squeeze(1))
-                good_img_features = (global_good_img_features + maksed_good_img_features)
+                good_img_features = ((1.0 - args.beta_mask) * global_good_img_features + args.beta_mask * maksed_good_img_features)
                 #sa_img_features = (sa_img_features + maksed_sa_img_features)/2
-                la_img_features = (global_la_img_features + maksed_la_img_features)
+                la_img_features = ((1.0 - args.beta_mask) * global_la_img_features + args.beta_mask * maksed_la_img_features)
             else:
-                pass
+                good_img_features = global_good_img_features
+                la_img_features = global_la_img_features
             
 
         good_img_features /= good_img_features.norm(dim=-1, keepdim=True)
@@ -612,17 +624,23 @@ def evaluate(args, model, tokenizer, pairs, test_good_dataset, test_sa_dataset, 
 
         text_features /= text_features.norm(dim=-1, keepdim=True)
         
-        text_features = text_features[:1+args.num_negative]
-        
-        #Sample에 대한 good일 확률 계산. positive rule에 대한 similarity is considered as good sample probablity
-        good_text_probs = (100.0 * good_img_features @ text_features.T).softmax(dim=-1)
-        good_probs.append(good_text_probs[:,0])
+        if args.pos_only == 1:
+            # No-negative ablation: normality score = similarity to the positive rule
+            # only (no negatives in the denominator). Higher cosine = more normal.
+            good_probs.append((good_img_features @ text_features[0:1].T)[:, 0])
+            la_probs.append((la_img_features @ text_features[0:1].T)[:, 0])
+        else:
+            text_features = text_features[:1+args.num_negative]
 
-        #sa_text_probs = (100.0 * sa_img_features @ text_features.T).softmax(dim=-1)
-        #sa_probs.append(sa_text_probs[:,0])
+            #Sample에 대한 good일 확률 계산. positive rule에 대한 similarity is considered as good sample probablity
+            good_text_probs = (100.0 * good_img_features @ text_features.T).softmax(dim=-1)
+            good_probs.append(good_text_probs[:,0])
 
-        la_text_probs = (100.0 * la_img_features @ text_features.T).softmax(dim=-1)
-        la_probs.append(la_text_probs[:,0])
+            #sa_text_probs = (100.0 * sa_img_features @ text_features.T).softmax(dim=-1)
+            #sa_probs.append(sa_text_probs[:,0])
+
+            la_text_probs = (100.0 * la_img_features @ text_features.T).softmax(dim=-1)
+            la_probs.append(la_text_probs[:,0])
 
     test_good_paths = _dataset_img_paths(test_good_dataset)
     test_la_paths = _dataset_img_paths(test_la_dataset)
@@ -719,7 +737,7 @@ def valid(args, model, tokenizer, pairs, valid_dataloader):
                         masked_image_feature = model.encode_image(masked_image_for_rule)
                     else:
                         masked_image_feature = model.encode_mask_image(masked_image_for_rule)
-                    image_feature = (global_image_feature + masked_image_feature)
+                    image_feature = ((1.0 - args.beta_mask) * global_image_feature + args.beta_mask * masked_image_feature)
                 else:
                     image_feature = model.encode_image(raw_image)
                 
@@ -727,7 +745,7 @@ def valid(args, model, tokenizer, pairs, valid_dataloader):
                     local_text = tokenizer(args.texts_for_rules[rule_idx]).to(device)
                     global_text_feature = model.encode_text(pair)
                     local_text_feature = model.encode_text(local_text)
-                    text_feature = (global_text_feature + local_text_feature)
+                    text_feature = ((1.0 - args.beta_text) * global_text_feature + args.beta_text * local_text_feature)
                 else:
                     text_feature = model.encode_text(pair)
 
@@ -750,7 +768,7 @@ def valid(args, model, tokenizer, pairs, valid_dataloader):
                         masked_image_feature = model.encode_image(masked_image_for_rule)
                     else:
                         masked_image_feature = model.encode_mask_image(masked_image_for_rule)
-                    image_feature = (global_image_feature + masked_image_feature)
+                    image_feature = ((1.0 - args.beta_mask) * global_image_feature + args.beta_mask * masked_image_feature)
                 else:
                     image_feature = model.encode_image(raw_image)
                 
@@ -758,7 +776,7 @@ def valid(args, model, tokenizer, pairs, valid_dataloader):
                     local_text = tokenizer(args.texts_for_rules[rule_idx]).to(device)
                     global_text_feature = model.encode_text(pair)
                     local_text_feature = model.encode_text(local_text)
-                    text_feature = (global_text_feature + local_text_feature)
+                    text_feature = ((1.0 - args.beta_text) * global_text_feature + args.beta_text * local_text_feature)
                 else:
                     text_feature = model.encode_text(pair)
 
@@ -885,7 +903,7 @@ def train(args, model, tokenizer, pairs, train_dataloader, valid_dataloader, tes
                             masked_image_feature = model.encode_image(masked_image_for_rule)
                         else:
                             masked_image_feature = model.encode_mask_image(masked_image_for_rule)
-                        image_feature = (global_image_feature + masked_image_feature)
+                        image_feature = ((1.0 - args.beta_mask) * global_image_feature + args.beta_mask * masked_image_feature)
                     else:
                         image_feature = global_image_feature
 
@@ -894,14 +912,22 @@ def train(args, model, tokenizer, pairs, train_dataloader, valid_dataloader, tes
                         local_text = tokenizer(args.texts_for_rules[rule_idx]).to(device)
                         global_text_feature = model.encode_text(pair)
                         local_text_feature = model.encode_text(local_text)
-                        text_feature = (global_text_feature + local_text_feature)
+                        text_feature = ((1.0 - args.beta_text) * global_text_feature + args.beta_text * local_text_feature)
                     else:
                         text_feature = model.encode_text(pair)
 
-                    loss = model.clip_loss(image_feature, text_feature, model.clip.logit_scale.exp())
-                    
+                    if args.pos_only == 1:
+                        # No-negative ablation: align images with the positive rule only
+                        # (no negative rules in the contrast), to test whether the
+                        # positive-vs-negative formulation is necessary.
+                        img_n = image_feature / image_feature.norm(dim=-1, keepdim=True)
+                        pos_n = text_feature[0:1] / text_feature[0:1].norm(dim=-1, keepdim=True)
+                        loss = (1.0 - (img_n @ pos_n.T)).mean()
+                    else:
+                        loss = model.clip_loss(image_feature, text_feature, model.clip.logit_scale.exp())
+
                     negative_loss = 0
-                    if args.neg_loss != 0:  
+                    if args.neg_loss != 0:
                         num_img = image_feature.shape[0]
                         if num_img == 1:            #0,| 1, 2, 3, 4, 5
                             negative_loss = compute_negative_count_loss(image_feature, text_feature[0], text_feature[1:1+args.num_negative])
@@ -957,7 +983,7 @@ def train(args, model, tokenizer, pairs, train_dataloader, valid_dataloader, tes
                             masked_image_feature = model.encode_image(masked_image_for_rule)
                         else:
                             masked_image_feature = model.encode_mask_image(masked_image_for_rule)
-                        image_feature = (global_image_feature + masked_image_feature)
+                        image_feature = ((1.0 - args.beta_mask) * global_image_feature + args.beta_mask * masked_image_feature)
                     else:
                         
                         image_feature = global_image_feature
@@ -967,7 +993,7 @@ def train(args, model, tokenizer, pairs, train_dataloader, valid_dataloader, tes
                         local_text = tokenizer(args.texts_for_rules[rule_idx]).to(device)
                         global_text_feature = model.encode_text(pair)
                         local_text_feature = model.encode_text(local_text)
-                        text_feature = (global_text_feature + local_text_feature)
+                        text_feature = ((1.0 - args.beta_text) * global_text_feature + args.beta_text * local_text_feature)
                     else:
                         text_feature = model.encode_text(pair)
 
@@ -1052,6 +1078,216 @@ def main(args):
         rules_for_data = get_rule(data_name = args.data_name, rule_idxs="max")
     else:
         rules_for_data = get_rule(data_name = args.data_name, rule_idxs=[i for i in range(args.num_rule)])
+
+    # Hand-authored ("manual") negative rules per category (R3-1 generation-strategy ablation).
+    # Each entry mirrors the positive-rule list and provides plausible, human-written violations.
+    _MANUAL_NEG_RULES = {
+        "breakfast": [
+            ["There are not two mandarins on the left.", "One of the two mandarins on the left is missing.", "There are three or more mandarins on the left.", "A mandarin on the left is replaced by another fruit.", "The mandarins are placed on the right instead of the left."],
+            ["There is no peach on the left.", "The peach is missing from the box.", "The peach is replaced by a different fruit.", "An extra peach is present.", "The peach is placed on the wrong side."],
+            ["There is no oat cereal on the top right.", "The oat cereal compartment is empty.", "The oat cereal is replaced by a different cereal.", "The oat cereal is placed in the wrong compartment.", "There is far too little oat cereal on the top right."],
+            ["There are no almonds down the right.", "The almonds are missing.", "The almonds are replaced by another nut.", "The almonds are placed in the wrong compartment.", "There are far too few almonds down the right."],
+            ["There are no banana chips down the right.", "The banana chips are missing.", "The banana chips are replaced by another snack.", "The banana chips are placed in the wrong compartment.", "There are far too few banana chips down the right."],
+            ["Some content overflows its compartment.", "An item spills over into a neighboring compartment.", "The contents exceed their designated boundaries.", "Food is piled above the rim of a compartment.", "Items are scattered outside their compartments."],
+            ["There are far more banana chips than almonds.", "There are far more almonds than banana chips.", "The amounts of banana chips and almonds are clearly unequal.", "One of the two snack compartments is nearly empty.", "Banana chips and almonds are present in very different quantities."],
+        ],
+        "splicing": [
+            ["There are not two splicing connectors.", "One splicing connector is missing.", "There are three or more splicing connectors.", "Only a single splicing connector is present.", "The number of splicing connectors is wrong."],
+            ["The two connectors are at clearly different heights.", "One connector is much higher than the other.", "The connectors are misaligned vertically.", "The two connectors are not level with each other.", "There is a large height gap between the two connectors."],
+            ["More than one cable is connected.", "No cable is connected.", "Two or more cables are attached.", "The number of connected cables is wrong.", "Several cables are plugged in at once."],
+            ["The two-block connector has a cable of the wrong color.", "The two-block connector is connected with a blue cable.", "The two-block connector is connected with an orange cable.", "The two-block connector's cable is not yellow.", "A non-yellow cable is attached to the two-block connector."],
+            ["The three-block connector has a cable of the wrong color.", "The three-block connector is connected with a yellow cable.", "The three-block connector is connected with an orange cable.", "The three-block connector's cable is not blue.", "A non-blue cable is attached to the three-block connector."],
+            ["The five-block connector has a cable of the wrong color.", "The five-block connector is connected with a blue cable.", "The five-block connector is connected with a yellow cable.", "The five-block connector's cable is not orange.", "A non-orange cable is attached to the five-block connector."],
+        ],
+        "banana_juice": [
+            ["The bottle has no banana picture label.", "The picture label shows a different fruit, not a banana.", "The banana picture label is missing.", "The label depicts the wrong fruit.", "There is no fruit picture on the label."],
+            ["The juice is not white.", "The bottle contains juice of the wrong color.", "The juice color does not match banana juice.", "The liquid is colored differently from banana juice.", "The juice has an incorrect color."],
+            ["The picture label is not centered.", "The picture label is shifted off-center.", "The label is misaligned, not in the center.", "The picture label is placed to one side.", "The label position is off from the center."],
+            ["The text label is not at the bottom.", "The text label is placed in the wrong position.", "The text label appears at the top instead of the bottom.", "The text label is misplaced.", "The bottom does not contain the text label."],
+            ["The bottle is not full of banana juice.", "The bottle is partially empty.", "The juice level is too low.", "The bottle is underfilled.", "There is not enough juice in the bottle."],
+        ],
+        "orange_juice": [
+            ["The bottle has no orange picture label.", "The picture label shows a different fruit, not an orange.", "The orange picture label is missing.", "The label depicts the wrong fruit.", "There is no fruit picture on the label."],
+            ["The juice is not yellow.", "The bottle contains juice of the wrong color.", "The juice color does not match orange juice.", "The liquid is colored differently from orange juice.", "The juice has an incorrect color."],
+            ["The picture label is not centered.", "The picture label is shifted off-center.", "The label is misaligned, not in the center.", "The picture label is placed to one side.", "The label position is off from the center."],
+            ["The text label is not at the bottom.", "The text label is placed in the wrong position.", "The text label appears at the top instead of the bottom.", "The text label is misplaced.", "The bottom does not contain the text label."],
+            ["The bottle is not full of orange juice.", "The bottle is partially empty.", "The juice level is too low.", "The bottle is underfilled.", "There is not enough juice in the bottle."],
+        ],
+        "cherry_juice": [
+            ["The bottle has no cherry picture label.", "The picture label shows a different fruit, not a cherry.", "The cherry picture label is missing.", "The label depicts the wrong fruit.", "There is no fruit picture on the label."],
+            ["The juice is not red.", "The bottle contains juice of the wrong color.", "The juice color does not match cherry juice.", "The liquid is colored differently from cherry juice.", "The juice has an incorrect color."],
+            ["The picture label is not centered.", "The picture label is shifted off-center.", "The label is misaligned, not in the center.", "The picture label is placed to one side.", "The label position is off from the center."],
+            ["The text label is not at the bottom.", "The text label is placed in the wrong position.", "The text label appears at the top instead of the bottom.", "The text label is misplaced.", "The bottom does not contain the text label."],
+            ["The bottle is not full of cherry juice.", "The bottle is partially empty.", "The juice level is too low.", "The bottle is underfilled.", "There is not enough juice in the bottle."],
+        ],
+        "pushpins": [
+            ["There are not fifteen pushpins.", "The number of pushpins is wrong.", "There are fewer than fifteen pushpins.", "There are more than fifteen pushpins.", "One or more pushpins are missing."],
+            ["Some pushpins are not separated by the plastic case.", "Two pushpins share the same compartment.", "The plastic dividers do not separate every pushpin.", "Pushpins are grouped together without separation.", "The case fails to keep each pushpin apart."],
+            ["A compartment contains more than one pushpin.", "Some parts hold two or more pushpins.", "More than one pushpin is placed in a single slot.", "A slot is occupied by multiple pushpins.", "The one-pushpin-per-compartment rule is violated."],
+            ["There is an empty compartment.", "Some slots are left blank.", "A compartment has no pushpin.", "There are vacant parts without a pushpin.", "One or more slots are empty."],
+        ],
+        "screw_bag": [
+            ["There are not two bolts.", "The number of bolts is wrong.", "One bolt is missing.", "There are three or more bolts.", "Only a single bolt is present."],
+            ["There is no short bolt.", "The short bolt is missing.", "Both bolts are long, none is short.", "The short bolt is replaced by a long one.", "A short bolt is absent from the bag."],
+            ["There is no long bolt.", "The long bolt is missing.", "Both bolts are short, none is long.", "The long bolt is replaced by a short one.", "A long bolt is absent from the bag."],
+            ["There are not two hexagonal nuts.", "The number of hexagonal nuts is wrong.", "One hexagonal nut is missing.", "There are three or more hexagonal nuts.", "A nut of the wrong type replaces a hexagonal nut."],
+            ["There are not two round washers.", "The number of round washers is wrong.", "One round washer is missing.", "There are three or more round washers.", "A washer of the wrong type replaces a round washer."],
+        ],
+    }
+
+    # Positive rule quality ablation (vague / paraphrase variants)
+    _VAGUE_POS_RULES = {
+        "breakfast": [
+            "There must be some citrus fruit items in the image.",
+            "There must be some stone fruit items in the image.",
+            "There must be some cereal items in the image.",
+            "There must be some nut items in the image.",
+            "There must be some chip items in the image.",
+            "Items should be properly placed in the box.",
+            "Items should be properly arranged.",
+        ],
+        "splicing": [
+            "There must be some connectors in the image.",
+            "The connectors should look similar in size.",
+            "There must be some cables attached.",
+            "Some connectors must have some color cables.",
+            "Some connectors must have some color cables.",
+            "Some connectors must have some color cables.",
+        ],
+        "juice_bot": [
+            "There should be a juice bottle with some fruit label.",
+            "The bottle should contain some juice.",
+            "There should be a juice bottle with some fruit label.",
+            "The bottle should contain some colored juice.",
+            "There should be a juice bottle with some fruit label.",
+            "The bottle should contain some colored juice.",
+            "There should be a label on the bottle.",
+            "There should be some text on the bottle.",
+        ],
+        "pushpins": [
+            "There should be many pushpins.",
+            "The pushpins should be in compartments.",
+            "Each compartment should hold a pushpin.",
+            "The compartments should be filled.",
+        ],
+        "screw_bag": [
+            "There should be some bolts.",
+            "There should be a smaller bolt.",
+            "There should be a larger bolt.",
+            "There should be some nuts.",
+            "There should be some washers.",
+        ],
+    }
+    _PARAPHRASE_POS_RULES = {
+        "breakfast": [
+            "Two tangerines must be positioned on the left side.",
+            "A peach must be located on the left portion of the image.",
+            "Oat cereal must appear in the upper right section.",
+            "Almonds need to be placed at the lower right.",
+            "Banana chips must be found at the lower right.",
+            "None of the contents should overflow their designated area.",
+            "Banana chips and almonds should have equal quantities.",
+        ],
+        "splicing": [
+            "The image should contain exactly two splicing connectors.",
+            "Both connectors should be at the same vertical height.",
+            "Exactly one cable should be in a connected state.",
+            "The two-block connector should be equipped with a yellow cable.",
+            "The three-block connector should be equipped with a blue cable.",
+            "The five-block connector should be equipped with an orange cable.",
+        ],
+        "juice_bot": [
+            "The banana juice bottle should display a banana image on its label.",
+            "The juice inside the banana bottle should be white.",
+            "The cherry juice bottle should display a cherry image on its label.",
+            "The juice inside the cherry bottle should be red.",
+            "The orange juice bottle should display an orange image on its label.",
+            "The juice inside the orange bottle should be yellow.",
+            "The picture on the label should be positioned at the center.",
+            "The text on the label should be located at the bottom.",
+        ],
+        "pushpins": [
+            "The case should contain exactly fifteen pushpins.",
+            "Each pushpin should be kept in its own plastic compartment.",
+            "No compartment should hold more than one pushpin.",
+            "There should be no empty compartment.",
+        ],
+        "screw_bag": [
+            "The bag should contain two bolts.",
+            "One of the bolts should be the short one.",
+            "One of the bolts should be the long one.",
+            "There should be a pair of hexagonal nuts.",
+            "There should be a pair of round washers.",
+        ],
+    }
+    if args.pos_rule_type != 'original':
+        _rule_map = _VAGUE_POS_RULES if args.pos_rule_type == 'vague' else _PARAPHRASE_POS_RULES
+        if args.data_name not in _rule_map:
+            raise ValueError(f"--pos_rule_type '{args.pos_rule_type}' not defined for dataset '{args.data_name}'")
+        new_pos = _rule_map[args.data_name]
+        # Align length with loaded rules
+        rules_for_data[0] = new_pos[:len(rules_for_data[0])]
+
+    # Negative rule quality ablation (R3-1): compare generation strategies
+    if args.neg_rule_type == 'shuffled':
+        neg_rules = rules_for_data[1]
+        n = len(neg_rules)
+        rules_for_data[1] = [neg_rules[(i + 1) % n] for i in range(n)]
+    elif args.neg_rule_type == 'naive':
+        # Unvalidated LLM-style generic negatives (no semantic checker)
+        pos_rules = rules_for_data[0]
+        rules_for_data[1] = [
+            [
+                f"This image does not follow the rule: {pos}",
+                "The arrangement shown violates product specifications.",
+                "The components are not in the correct configuration.",
+                "There is an anomaly visible in the arrangement.",
+                "The image shows an incorrect product state.",
+            ]
+            for pos in pos_rules
+        ]
+    elif args.neg_rule_type == 'template':
+        # Deterministic string templates derived from each positive rule (no LLM)
+        pos_rules = rules_for_data[0]
+        def _pl(p):
+            p = p.strip()
+            return (p[0].lower() + p[1:]).rstrip('.')
+        rules_for_data[1] = [
+            [
+                f"This image does not satisfy the rule: {pos.strip().rstrip('.')}.",
+                f"The condition is violated: {pos.strip().rstrip('.')}.",
+                f"It is not the case that {_pl(pos)}.",
+                f"The image fails the requirement that {_pl(pos)}.",
+                f"The arrangement does not meet the rule: {pos.strip().rstrip('.')}.",
+            ]
+            for pos in pos_rules
+        ]
+    elif args.neg_rule_type == 'qa':
+        # QA-style negatives (reproducing the conference-version construction)
+        pos_rules = rules_for_data[0]
+        def _pl(p):
+            p = p.strip()
+            return (p[0].lower() + p[1:]).rstrip('.')
+        rules_for_data[1] = [
+            [
+                f"Question: Does the image satisfy '{pos.strip().rstrip('.')}'? Answer: No.",
+                f"Q: Is it true that {_pl(pos)}? A: No, it is not.",
+                f"Asked whether {_pl(pos)}, the answer is negative.",
+                f"Does this image meet the rule '{pos.strip().rstrip('.')}'? It does not.",
+                f"Is the rule '{pos.strip().rstrip('.')}' satisfied? No.",
+            ]
+            for pos in pos_rules
+        ]
+    elif args.neg_rule_type == 'manual':
+        # Hand-authored negatives encoding plausible violations (domain knowledge)
+        if args.data_name not in _MANUAL_NEG_RULES:
+            raise ValueError(f"--neg_rule_type 'manual' not defined for dataset '{args.data_name}'")
+        man = _MANUAL_NEG_RULES[args.data_name]
+        if len(man) != len(rules_for_data[1]):
+            raise ValueError(
+                f"manual neg rules count ({len(man)}) != positive rules count ({len(rules_for_data[1])}) for {args.data_name}")
+        rules_for_data[1] = man
+
     rule_token_pairs = get_rule_tokens(rules=rules_for_data, tokenizer=tokenizer, device=device)
     
     print(args)
@@ -1065,8 +1301,13 @@ def main(args):
         )
 
     args.data_base_path = DATA_BASE_PATH_DICT[args.data_name]
+    # Non-destructive override: load precomputed .pt from a custom directory
+    # (e.g. an alternate kernel-size RRD build) without touching the main data.
+    if getattr(args, 'data_base_path_override', '') :
+        args.data_base_path = args.data_base_path_override
+        print(f"[data_base_path override] loading .pt from {args.data_base_path}")
 
-   
+
     #train_dataset = torch.load(os.path.join(args.data_base_path, f"{tag}_train.pt"))
     #val_dataset = torch.load(os.path.join(args.data_base_path, f'{tag}_val.pt'))
     #test_good_dataset = torch.load(os.path.join(args.data_base_path, f'{tag}_test_good.pt'))
@@ -1216,7 +1457,13 @@ if __name__ == "__main__":
     parser.add_argument('--hybrid_promptad_n_ctx_ab', default=1, type=int)
     parser.add_argument('--hybrid_promptad_n_pro_ab', default=4, type=int)
     parser.add_argument('--early_stop_k', default=10, type=int)
+    parser.add_argument('--beta_mask', default=0.5, type=float)   # weight for masked vs global image feature (0=global only, 1=masked only)
+    parser.add_argument('--beta_text', default=0.5, type=float)   # weight for local vs global text feature (0=global only, 1=local only)
+    parser.add_argument('--pos_rule_type', default='original', type=str, choices=['original', 'vague', 'paraphrase'])
+    parser.add_argument('--neg_rule_type', default='original', type=str, choices=['original', 'shuffled', 'naive', 'template', 'qa', 'manual'])
     parser.add_argument('--result_log_path', default='./results/train_hybrid_result.csv', type=str)
+    parser.add_argument('--data_base_path_override', default='', type=str, help='load precomputed train/test .pt from this dir instead of the default (non-destructive, e.g. alternate kernel RRD build)')
+    parser.add_argument('--pos_only', default=0, type=int, help='ablation: train and score with positive rules only (no negative rules anywhere) to test the necessity of negatives')
     args = parser.parse_args()
     #--model_name ViT-g-14 --pretrained_name laion2b_s12b_b42k
 

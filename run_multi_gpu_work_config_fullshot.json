@@ -1,0 +1,108 @@
+{
+  "gpus": [
+    2,
+    3
+  ],
+  "tasks": [
+    {
+      "name": "fullshot_breakfast_shot50",
+      "command": "python train_hybrid.py --data_name breakfast --hybrid_model winclip --shot 50 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_breakfast_shot100",
+      "command": "python train_hybrid.py --data_name breakfast --hybrid_model winclip --shot 100 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_breakfast_shot200",
+      "command": "python train_hybrid.py --data_name breakfast --hybrid_model winclip --shot 200 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_breakfast_shot300",
+      "command": "python train_hybrid.py --data_name breakfast --hybrid_model winclip --shot 300 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_juice_bot_shot50",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model winclip --shot 50 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_juice_bot_shot100",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model winclip --shot 100 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_juice_bot_shot200",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model winclip --shot 200 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_juice_bot_shot300",
+      "command": "python train_hybrid.py --data_name juice_bot --hybrid_model winclip --shot 300 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_pushpins_shot50",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model winclip --shot 50 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_pushpins_shot100",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model winclip --shot 100 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_pushpins_shot200",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model winclip --shot 200 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_pushpins_shot300",
+      "command": "python train_hybrid.py --data_name pushpins --hybrid_model winclip --shot 300 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_screw_bag_shot50",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model winclip --shot 50 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_screw_bag_shot100",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model winclip --shot 100 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_screw_bag_shot200",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model winclip --shot 200 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_screw_bag_shot300",
+      "command": "python train_hybrid.py --data_name screw_bag --hybrid_model winclip --shot 300 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_splicing_shot50",
+      "command": "python train_hybrid.py --data_name splicing --hybrid_model winclip --shot 50 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_splicing_shot100",
+      "command": "python train_hybrid.py --data_name splicing --hybrid_model winclip --shot 100 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 3
+    },
+    {
+      "name": "fullshot_splicing_shot200",
+      "command": "python train_hybrid.py --data_name splicing --hybrid_model winclip --shot 200 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    },
+    {
+      "name": "fullshot_splicing_shot300",
+      "command": "python train_hybrid.py --data_name splicing --hybrid_model winclip --shot 300 --mask True --text True --double_encoder True --few_shot True --lr 5e-4 --epoch 100 --detection True --preprocess True --hybrid_weight 0.3 --hybrid_batch_size 8 --early_stop_k 10 --log True --tag fullshot --result_log_path results/train_hybrid_fullshot_result.csv",
+      "repeat": 1
+    }
+  ]
+}

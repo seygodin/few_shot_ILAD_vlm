@@ -1,0 +1,37 @@
+{
+  "model": "LLaVA-1.6-Mistral-7B",
+  "timestamp": "2026-06-18T17:14:59.289200",
+  "results": {
+    "breakfast": {
+      "name": "Breakfast box",
+      "accuracy": 44.86486486486487,
+      "n": 185,
+      "unknown": 0
+    },
+    "splicing": {
+      "name": "Splicing connectors",
+      "accuracy": 47.57709251101321,
+      "n": 227,
+      "unknown": 0
+    },
+    "juice_bot": {
+      "name": "Juice bottle",
+      "accuracy": 60.16949152542372,
+      "n": 236,
+      "unknown": 0
+    },
+    "pushpins": {
+      "name": "Pushpins",
+      "accuracy": 39.737991266375545,
+      "n": 229,
+      "unknown": 0
+    },
+    "screw_bag": {
+      "name": "Screw bag",
+      "accuracy": 52.8957528957529,
+      "n": 259,
+      "unknown": 0
+    },
+    "average": 49.049038612686054
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "model": "Qwen2-VL-7B",
+  "timestamp": "2026-06-18T17:31:22.579136",
+  "results": {
+    "breakfast": {
+      "name": "Breakfast box",
+      "accuracy": 83.24324324324324,
+      "n": 185,
+      "unknown": 0
+    },
+    "splicing": {
+      "name": "Splicing connectors",
+      "accuracy": 55.50660792951542,
+      "n": 227,
+      "unknown": 0
+    },
+    "juice_bot": {
+      "name": "Juice bottle",
+      "accuracy": 50.847457627118644,
+      "n": 236,
+      "unknown": 0
+    },
+    "pushpins": {
+      "name": "Pushpins",
+      "accuracy": 60.26200873362445,
+      "n": 229,
+      "unknown": 0
+    },
+    "screw_bag": {
+      "name": "Screw bag",
+      "accuracy": 59.07335907335908,
+      "n": 259,
+      "unknown": 0
+    },
+    "average": 61.78653532137216
+  }
+}

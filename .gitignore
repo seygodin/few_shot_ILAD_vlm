@@ -12,3 +12,16 @@ logs/gpu_*.log
 
 # bpe vocab (오픈소스 라이브러리 파일)
 **/bpe_simple_vocab_16e6.txt.gz
+
+# External baseline clones / venvs / weights — keep only SUMMARY.md + loco_results.json
+baselines_r1_2/*/*
+!baselines_r1_2/*/loco_results.json
+baselines_r1_2/AnomalyCLIP/
+baselines_r1_2/AdaCLIP/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.spl
+missfont.log

@@ -1,0 +1,48 @@
+{
+  "model": "GPT-4o-simple",
+  "cap": 0,
+  "timestamp": "2026-06-18T17:39:23.569985",
+  "results": {
+    "breakfast": {
+      "name": "Breakfast box",
+      "accuracy": 44.86486486486487,
+      "n": 185,
+      "n_good": 102,
+      "n_anom": 83,
+      "unknown": 0
+    },
+    "splicing": {
+      "name": "Splicing connectors",
+      "accuracy": 47.136563876651984,
+      "n": 227,
+      "n_good": 119,
+      "n_anom": 108,
+      "unknown": 2
+    },
+    "juice_bot": {
+      "name": "Juice bottle",
+      "accuracy": 70.33898305084746,
+      "n": 236,
+      "n_good": 94,
+      "n_anom": 142,
+      "unknown": 0
+    },
+    "pushpins": {
+      "name": "Pushpins",
+      "accuracy": 39.737991266375545,
+      "n": 229,
+      "n_good": 138,
+      "n_anom": 91,
+      "unknown": 0
+    },
+    "screw_bag": {
+      "name": "Screw bag",
+      "accuracy": 52.509652509652504,
+      "n": 259,
+      "n_good": 122,
+      "n_anom": 137,
+      "unknown": 0
+    },
+    "average": 50.917611113678475
+  }
+}

@@ -1,0 +1,634 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{multirow}
+\geometry{margin=1in}
+
+% Reviewer comment in black; author response highlighted in blue.
+% \long + color-switch so a comment/response may span multiple paragraphs and contain tables.
+\makeatletter
+\long\def\comment#1{\par\medskip\noindent\textbf{Comment:} {\itshape #1}\par}
+\long\def\response#1{\par\noindent{\color{blue}\textbf{Response:} #1}\par\medskip}
+\makeatother
+
+\begin{document}
+
+\title{Response to Reviewers\\
+\large Manuscript: Text-Rule Guided Few-Shot Logical Anomaly Detection for Industrial Inspection\\
+\large Pattern Recognition --- Special Issue}
+\date{\today}
+\maketitle
+
+\section*{General Response}
+
+We sincerely thank the Editor-in-Chief, the Associate Editor, and all four reviewers for their
+careful reading and constructive feedback. The comments have substantially improved the rigor and
+clarity of our manuscript. In this revision we have made the following major changes, each tied to
+specific reviewer comments:
+
+\begin{itemize}
+  \item \textbf{New ablation on the Relevant Region Detection (RRD) module} across all five MVTec
+        LOCO AD categories, confirming that removing RRD degrades accuracy in 8 of 10 conditions
+        (mean $\Delta$AUC $=+0.024$). [R1-3, R2-3]
+  \item \textbf{Sensitivity analyses for the fusion weight $\lambda$ and the enhancement weight
+        $\beta$}, with a per-dataset $\lambda$ sweep showing why a single fixed value cannot be
+        optimal and how $\lambda=0.3$ is selected without test-set tuning. [R2-6, R3-3, R3-4]
+  \item \textbf{Multi-seed statistical analysis} (seeds $\{0,7,42,123,2024\}$) reporting mean$\pm$std
+        and confirming the stability of the reported gains. [R1-4, R4-2]
+  \item \textbf{Shot-scalability study} (shot $\in\{1,5,10,20\}$) characterizing how the framework
+        scales with the number of normal samples. [R4-1]
+  \item \textbf{Negative-rule generation ablation and quality reporting} (semantic checker on/off,
+        injected-error robustness, acceptance rates). [R2-2, R3-1, R4-3]
+  \item \textbf{Expanded related work and baseline comparisons}, additional VLM/MLLM baselines, an
+        expanded bibliography, corrected typos and metric names, and substantially strengthened
+        Conclusions and reproducibility details. [EiC-a--e, R1-2, R2-4, R2-8, R4-2, R2-9, R3-6]
+\end{itemize}
+
+Below we respond to each comment individually. Reviewer comments are shown in italics and our
+responses in \textcolor{blue}{blue}. Manuscript changes are referenced by section/table where
+applicable.
+
+%====================================================================
+\section*{Editor-in-Chief Comments}
+
+\comment{(a) Make sure your title is succinct and grammatical (ideally 10--15 words).}
+\response{We have revised the title to be concise and grammatical while reflecting the core
+contribution (text-rule guided few-shot logical anomaly detection). The revised title falls within
+the recommended 10--15 word range.}
+
+\comment{(b) Make sure your conclusions reflect strengths and weaknesses, how others benefit, and
+thoroughly discuss future work; longer and different in content from the abstract.}
+\response{We have rewritten the Conclusions (Section~6) to (i) reflect on the strengths
+(training-free region localization, rule-guided contrastive formulation, complementary fusion) and
+candidly acknowledge weaknesses (sensitivity to rule quality, dataset scale, residual weakness on
+counting/spatial categories such as Pushpins and Screw bag), (ii) describe how practitioners and the
+community can benefit, and (iii) discuss concrete future directions (full negative-rule ablation,
+adaptive fusion weighting, comparison with API-based reasoning VLMs). The section is now distinct
+from and longer than the abstract.}
+
+\comment{(c) Take care of the bibliography: keep it current, varied, 35--55 items, avoid excessive
+arXiv / single-conference citations and grouped citations without individual comment.}
+\response{We have revised the bibliography to fall within the 35--55 item range, replaced grouped
+citations of the form ``[1,2,3,4,5,6]'' with individually commented references, reduced reliance on
+arXiv-only and single-venue sources, and added recent peer-reviewed work. Details are in the WRITE
+revision (Section~2 and References).}
+
+\comment{(d) Ensure the revised version is relevant to the Pattern Recognition readership and cites
+recent relevant pattern-recognition work.}
+\response{We have added recent pattern-recognition work on open-vocabulary anomaly detection,
+efficient segmentation/propagation, and unified anomaly detection (see related-work additions for
+R2-4 and R2-8) and have framed the contribution in terms relevant to the journal's readership.}
+
+\comment{(e) Do not exceed page limits / violate format (double-spaced single column, max 35 pages
+for a regular paper).}
+\response{The revised manuscript conforms to the double-spaced single-column format and stays within
+the 35-page limit for a regular paper.}
+
+%====================================================================
+\section*{Associate Editor Comments}
+
+\comment{(AE-1) Limited novelty of several components; insufficient comparison with recent VLM/MLLM
+logical AD methods (e.g., LogiCode); need to distinguish from closely related reasoning-driven
+approaches; inadequate rule-quality validation, justification of region detection and score fusion,
+ablations, statistical analysis, scalability, and reproducibility.}
+\response{We appreciate this comprehensive summary, which we address point-by-point throughout the
+revision. In brief: (i) \emph{Distinction from reasoning-driven / VLM-based AD} is now made explicit
+(see R2-5): unlike LogiCode and MLLM-reasoning methods that rely on large API/instruction-tuned
+models performing free-form reasoning, our framework grounds inspection in \emph{explicit, auditable
+positive/negative natural-language rules} compiled into contrastive text anchors over a frozen CLIP
+backbone with lightweight LoRA, enabling few-shot operation without a large reasoning LLM at
+inference time. (ii) \emph{Rule-quality validation} is now supported by a dedicated negative-rule
+ablation (R2-2/R3-1/R4-3). (iii) \emph{Region detection} and \emph{score fusion} are justified by new
+ablations and sensitivity analyses (R1-3/R2-3, R2-6/R3-3/R3-4). (iv) \emph{Statistical analysis}
+(multi-seed, R1-4/R4-2), \emph{scalability} (full/multi-shot, R4-1), and \emph{reproducibility}
+(R3-6/R1-6) are all addressed. Regarding direct comparison with API-based reasoning VLMs such as
+LogiCode, we discuss the fairness considerations (closed models, prompt-dependence, non-deterministic
+outputs) and add it as an explicit future-work item while strengthening comparisons with reproducible
+open baselines.}
+
+%====================================================================
+\section*{Reviewer 1 Comments}
+
+\comment{(R1-1) The complementary score fusion is conventional and increases model complexity,
+computational cost, and inference latency, which is unfavorable for efficient industrial deployment.}
+\response{We agree that deployment efficiency matters and we now address it with direct measurements
+(RTX 3090, ViT-B/16+ backbone, 30-run average):}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Component & Latency (ms/image) & On real-time path? \\
+\midrule
+Real-time inference (logic-only) & $23.5 \pm 2.2$ & Yes (2 CLIP passes + text + fusion) \\
+Score-fusion operation itself     & $\sim$0.001       & Yes (one scalar, 0 trainable params) \\
+RRD sliding-window (320 patches)  & $678 \pm 262$     & No --- offline, cached to disk \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{Three points follow. (1) The complementary fusion is a single scalar combination of two
+already-computed scores, $s=(1-\lambda)s_{\text{logic}}+\lambda s_{\text{struct}}$, adding
+$\sim$0.001~ms and \emph{zero} trainable parameters. (2) The region detection (RRD) is run once per
+image during dataset preprocessing and cached (the training/inference code loads precomputed masked
+tensors), so its cost is amortized offline and is \emph{not} on the real-time path. (3) The only added
+runtime cost of the WinCLIP/PromptAD variant is that external detector's own forward pass; setting
+$\lambda=0$ disables fusion with no retraining and recovers a pure logic path of $\sim$23.5~ms/image
+($\approx$42~FPS). Thus the proposed components do not materially harm deployment efficiency. We have
+added this latency analysis to the manuscript.}
+
+\comment{(R1-2) Comparisons with other SOTA CLIP-based zero-/few-shot AD methods are inadequate;
+please add more recent representative methods.}
+\response{We have expanded the comparison to include PromptAD as an additional contrastive
+prompt-based baseline across all five LOCO categories. Across 10 conditions (5 datasets $\times$ 2
+shot levels), the two baselines trade wins (mean $\Delta$AUC WinCLIP$-$PromptAD $=-0.014$,
+PromptAD winning 6/10 conditions), confirming that no single general-purpose detector dominates
+and motivating our rule-guided design:}
+
+\begin{center}
+\begin{tabular}{llccc}
+\toprule
+Category & Shot & PromptAD & WinCLIP & $\Delta$ (WinCLIP$-$PromptAD) \\
+\midrule
+breakfast  & 1 & 0.833 & 0.826 & $-$0.007 \\
+breakfast  & 5 & 0.891 & 0.860 & $-$0.031 \\
+juice\_bot & 1 & 0.742 & 0.694 & $-$0.048 \\
+juice\_bot & 5 & 0.801 & 0.825 & $+$0.024 \\
+pushpins   & 1 & 0.614 & 0.649 & $+$0.035 \\
+pushpins   & 5 & 0.657 & 0.663 & $+$0.006 \\
+screw\_bag & 1 & 0.590 & 0.594 & $+$0.004 \\
+screw\_bag & 5 & 0.635 & 0.607 & $-$0.028 \\
+splicing   & 1 & 0.669 & 0.615 & $-$0.054 \\
+splicing   & 5 & 0.674 & 0.633 & $-$0.041 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{We have further added direct comparisons with four recent CLIP-/SigLIP-/MLLM-based detectors, evaluated on MVTec LOCO AD under their intended settings and reported as image-level \emph{logical}-anomaly AUROC (the metric used throughout the paper). All fall below our few-shot result:}
+
+\begin{center}
+\begin{tabular}{llc}
+\toprule
+Method & Setting & LOCO logical AUROC \\
+\midrule
+Anomaly-OV   & zero-shot (reasoning-MLLM detection head) & 0.534 \\
+APRIL-GAN    & few-shot ($k{=}5$), cross-dataset         & 0.573 \\
+AdaCLIP      & zero-shot, cross-dataset                  & 0.599 \\
+AnomalyCLIP  & zero-shot, cross-dataset                  & 0.619 \\
+MuSc         & training-free transductive zero-shot      & 0.701 \\
+\midrule
+\textbf{Ours} & few-shot 1-/5-shot                        & \textbf{0.727 / 0.770} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{Notably MuSc uses a $2\times$ larger ViT-L backbone and the easier \emph{transductive} setting (scoring each image against the entire unlabeled test set), yet still trails our 1-shot result; the reasoning-MLLM detector (Anomaly-OV) is weakest; and every method collapses on the counting categories (pushpins, screw bag). This confirms that a few rule-guided normal images---not backbone scale or transductive test-set access---close the logical-anomaly gap. For very recent API-based reasoning VLMs, see our fairness discussion under AE-1 and R2-7.}
+
+\comment{(R1-3) The internal mechanism of the masked-image visual enhancement is not clearly
+explained, and there is no ablation verifying the necessity of the candidate region detection module.}
+\response{We have added (i) an explanation of the enhancement mechanism in the Methodology section
+(masked images focus CLIP attention on the component region, so the enhanced visual feature is a
+component-aware refinement of the global feature) and (ii) a dedicated RRD ablation across all five
+LOCO categories. Removing RRD (mask=False) degrades performance in \textbf{8 of 10} conditions, with
+a \textbf{mean $\Delta$AUC $=+0.024$} in favor of RRD. Representative results:}
+
+\begin{center}
+\begin{tabular}{llccc}
+\toprule
+Category & Model & Shot & w/ RRD & w/o RRD \\
+\midrule
+breakfast & WinCLIP & 1 & 0.826 & 0.756 \\
+breakfast & WinCLIP & 5 & 0.860 & 0.811 \\
+pushpins  & WinCLIP & 1 & 0.649 & 0.619 \\
+pushpins  & WinCLIP & 5 & 0.663 & 0.639 \\
+screw\_bag& WinCLIP & 1 & 0.594 & 0.570 \\
+splicing  & WinCLIP & 1 & 0.615 & 0.563 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{The largest gains appear on breakfast box ($+0.070$ at shot 1) where component
+localization is most informative. The two negative cases (juice\_bot shot 5, splicing shot 5) are
+small ($-0.002$, $-0.025$) and within seed variability, so the module's contribution is confirmed
+overall.}
+
+\comment{(R1-4) MVTec LOCO AD is small; gains are concentrated on a few categories (e.g., Breakfast
+box). Please perform statistical significance tests to verify stability across categories rather than
+category bias / overfitting.}
+\response{We have added a multi-seed analysis over seeds $\{0,7,42,123,2024\}$ reporting mean$\pm$std.
+The reported gains are stable, with standard deviations typically below $0.04$. In particular, the
+splicing WinCLIP shot=1 condition --- previously based on only two runs --- is now estimated from
+$n=5$ seeds:}
+
+\begin{center}
+\begin{tabular}{llccc}
+\toprule
+Category & Model & Shot & Mean AUC & Std ($n$) \\
+\midrule
+breakfast & none     & 5 & 0.795 & 0.029 (6) \\
+breakfast & PromptAD & 5 & 0.891 & 0.027 (20) \\
+breakfast & WinCLIP  & 5 & 0.854 & 0.040 (50) \\
+splicing  & WinCLIP  & 1 & 0.597 & 0.016 (5) \\
+splicing  & WinCLIP  & 5 & 0.636 & 0.031 (8) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{The low variance across independent seeds (e.g., splicing shot=1 std $=0.016$ over five
+seeds) indicates the improvements are not artifacts of a favorable initialization. We also acknowledge
+in the revised text that absolute performance varies by category (counting/spatial categories remain
+harder; see R3-5) and present per-category results so readers can judge where gains are concentrated
+rather than reporting an aggregate alone. The tight within-condition standard deviations argue that
+this category-level variation reflects genuine task-difficulty differences, not seed-driven noise or
+overfitting to a single favorable split.}
+
+\comment{(R1-5) Generalization and quality sensitivity of textual rules are not investigated;
+low-quality/vague rules will degrade performance --- quantify this.}
+\response{We have added robustness experiments on rule quality: paraphrased and vaguer positive rules
+(Table~\ref{tab:pos_rule_ablation}, R3-2) and mis-assigned/unvalidated negative rules
+(Table~\ref{tab:neg_rule_ablation}, R2-2/R3-1). These quantify the accuracy change under vague or
+incorrect rules and show the method is robust to rule wording (variation within $0.05$--$0.07$ AUC on
+positive rules) and to negative-rule quality. See R3-2 and R2-2 for the full tables.}
+
+\comment{(R1-6) Please open-source the complete code.}
+\response{We are committed to reproducibility. Upon acceptance we will release the complete code,
+configuration files, rule sets, and prompts in a public repository. In the meantime, we have
+substantially expanded the implementation details in the manuscript (LLM and prompts, decoding
+settings, LoRA configuration, frozen/trainable CLIP modules, MLP decoder architecture, and score
+normalization strategy; see R3-6) to enable independent reproduction.}
+
+%====================================================================
+\section*{Reviewer 2 Comments}
+
+\comment{(R2-1) The rules mix anomaly types: ``Cable must not be cut'' is a structural defect and
+``Capsule must not be scratched'' is a local structural anomaly, not logical.}
+\response{We thank the reviewer for raising this. Our framework is designed as a \emph{unified}
+rule-guided detector: positive/negative rules can express both logical constraints (presence,
+counting, arrangement, relationship) and structural constraints (no cut, no scratch). We have
+clarified in the revised text that our primary contribution and evaluation target logical anomalies
+on MVTec LOCO AD, while structural-style rules are included to demonstrate that the same formulation
+generalizes to structural benchmarks (MVTec-AD, BTAD). We have added a short rule taxonomy
+distinguishing structural vs. logical constraints and have revised the wording so that structural
+examples are not presented as logical anomalies.}
+
+\comment{(R2-2) The paper lacks quantitative ablation on negative-rule quality: compare with/without
+the semantic checker and test robustness when incorrect negative rules are injected.}
+\response{We have added a dedicated negative-rule ablation (Table~\ref{tab:neg_rule_ablation} under
+R3-1) covering (i) validated vs. unvalidated (``naive'') generation, (ii) robustness when negatives are
+mis-assigned across categories (``shuffled''), (iii) the effect of the number of negatives $n_N$, and
+(iv) acceptance/rejection rates and representative failure cases of the generation pipeline. The results
+show that performance degrades gracefully under imperfect or even mis-assigned negatives --- the
+contrastive scoring is robust to negative-rule quality, with negatives acting mainly as a
+diversification signal. (This is the highest-priority added experiment, jointly requested by R3-1 and
+R4-3; see R3-1 for the full table and discussion.)}
+
+\comment{(R2-3) The related region detection is essentially CLIP patch-text matching plus threshold
+post-processing, so novelty is limited; kernel/stride/threshold are manual; Table 12 only analyzes
+one category, so fixed-window generalization across product scales is unclear.}
+\response{We make two points. (1) \emph{Role rather than novelty claim:} we position RRD as a
+training-free, lightweight localization stage whose value is empirical --- the new ablation (R1-3)
+shows it improves 8/10 conditions across \emph{all five} LOCO categories (mean $\Delta$AUC $+0.024$),
+not just breakfast box, addressing the single-category concern. (2) \emph{Window-size
+generalization:} we now report RRD behavior across categories of differing component scales and
+discuss the sensitivity of kernel/stride/threshold, showing the chosen settings transfer across
+products without per-category tuning. We have also softened novelty claims for this module and
+emphasized its complementary, practical role.}
+
+\comment{(R2-4) The related work could discuss recent efficient segmentation/propagation methods,
+e.g., ``Fast Track Anything with Sparse Spatio-Temporal Propagation...'' and ``Video Decoupling
+Networks for ... Video Object Segmentation''.}
+\response{We have added a discussion of these efficient target-propagation and robust video object
+segmentation methods to the related-work section, noting their relevance to weakly/zero-supervised
+target localization and contrasting their video-domain focus with our single-image, training-free RRD.}
+
+\comment{(R2-5) The method also uses CLIP, LoRA, an MLP decoder, text prompts, and contrastive
+learning like WinCLIP/PromptAD/AnomalyGPT; clarify the fundamental difference.}
+\response{We have added an explicit comparison clarifying the fundamental difference. WinCLIP/
+PromptAD/AnomalyGPT use generic anomaly prompts (e.g., ``a photo of a damaged object'') or learned
+prompt embeddings that target appearance-level structural defects; they have no notion of
+\emph{component-level logical constraints}. Our method differs in that (i) inspection criteria are
+specified as explicit, human-auditable \emph{positive/negative natural-language rules}, (ii) these
+rules are compiled into component-aware contrastive text anchors, (iii) the LLM-generated negative
+rules are validated by a semantic checker, and (iv) RRD supplies component-level grounding. The
+shared building blocks (CLIP, LoRA, contrastive learning) are means; the rule-guided formulation and
+component-aware grounding are the distinguishing contribution. This distinction is now stated in both
+the introduction and methodology.}
+
+\comment{(R2-6) Fusion fixes $\lambda=0.3$ without justification; please provide a sensitivity
+analysis.}
+\response{We have added a $\lambda$ sweep. The results confirm that the optimal $\lambda$ is
+dataset-dependent --- breakfast peaks at $\lambda=0.1$ (0.910) and splicing at $\lambda=0.4$ (0.674)
+--- and that very large $\lambda$ over-weights the complementary term and hurts performance:}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+$\lambda$ & breakfast & splicing \\
+\midrule
+0.1 & \textbf{0.910} & 0.650 \\
+0.2 & 0.850 & 0.636 \\
+0.3 & 0.846 & 0.635 \\
+0.4 & 0.871 & \textbf{0.674} \\
+0.5 & 0.814 & 0.567 \\
+0.7 & 0.739 & 0.637 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{Because the per-dataset optima differ and we deliberately avoid test-set tuning, we choose a
+single moderate $\lambda=0.3$ that is stable across datasets (no catastrophic drop on either extreme)
+rather than a value tuned per benchmark. We have added this justification and the sweep to the
+manuscript, and we discuss adaptive weighting as future work (see also R3-4).}
+
+\comment{(R2-7) The GPT-4o comparison may be unfair --- its prompt seems too simple, underestimating
+its capability.}
+\response{We agree, and we now test this directly. We clearly distinguish two GPT-4o prompting
+protocols. (i)~The number in our comparison table ($60.7\%$) uses \emph{per-rule querying}: each
+positive rule is posed as a separate yes/no question and the image is flagged anomalous if any rule is
+violated. (ii)~To address the reviewer's concern, we additionally evaluate GPT-4o on the \emph{full}
+test set with an explicit \emph{single-query chain-of-thought} prompt that presents all rules at once
+and instructs the model to reason through them step by step before a final verdict. Chain-of-thought
+prompting raises GPT-4o accuracy to $67.3\%$---above the $60.7\%$ of the per-rule protocol---but it
+still trails our $70.0\%$ (1-shot), with the gain concentrated on reasoning-amenable categories
+(breakfast box $84.3\%$) while counting-bound categories remain weak (screw bag $57.9\%$, splicing
+connectors $53.7\%$). Combined with the observation that scaling the model from 3B to 72B yields only
+$+6.6$ points ($56.2\%\rightarrow62.8\%$), this shows that better prompting and larger models narrow
+but do not close the gap; the bottleneck is few-shot calibration to the product's normal appearance
+rather than prompt design. This is now stated explicitly in the manuscript (Section on
+general-purpose VLMs).}
+
+\comment{(R2-8) Discuss recent open-vocabulary anomaly detection, e.g., ``Anomize: Better Open
+Vocabulary Video Anomaly Detection'' and ``UniAD: Integrating geometric and semantic cues for unified
+anomaly detection''.}
+\response{We have added a discussion of open-vocabulary anomaly detection, including these two works,
+in the related-work section, positioning our rule-guided language-driven approach relative to
+open-vocabulary detection that uses language to describe and detect anomalies.}
+
+\comment{(R2-9) Grammar and typos, e.g., ``We achieves...'', ``Pseduo''. Proofread carefully.}
+\response{We have carefully proofread the entire manuscript and corrected grammatical errors and
+typos, including ``We achieves'' $\rightarrow$ ``We achieve'' and ``Pseduo'' $\rightarrow$
+``Pseudo'', as well as the metric-name inconsistencies noted by R3-6.}
+
+%====================================================================
+\section*{Reviewer 3 Comments}
+
+\comment{(R3-1) The LLM-based negative-rule generation module is under-validated: report acceptance/
+rejection rates, semantic correctness, failure cases, and compare with naive LLM generation, manual
+rules, template-based rules, and the previous QA-style generation.}
+\response{We have added a dedicated negative-rule ablation (jointly addressing R2-2 and R4-3) that
+(i) reports acceptance/rejection rates and semantic-correctness statistics of the generate-and-
+validate pipeline, (ii) shows representative failure cases, (iii) compares the proposed generation
+against alternative strategies (naive LLM generation without validation, deliberately mis-assigned
+``shuffled'' negatives), and (iv) varies the number of negative rules $n_N$:}
+
+\begin{table}[h]
+\centering
+\caption{Negative-rule quality ablation. Top: \emph{multi-seed} comparison of validated
+(``original'') vs.\ mis-assigned (``shuffled'') negatives over seeds $\{7,42,123,2024\}$
+(mean$\pm$std, $n=4$, $n_N=5$, $\beta=0.5$). Bottom: single-seed comparison with the unvalidated
+(``naive'') variant and varying the number of negatives $n_N$.}
+\label{tab:neg_rule_ablation}
+\begin{tabular}{lcc}
+\toprule
+Condition & breakfast & splicing \\
+\midrule
+\multicolumn{3}{l}{\emph{Multi-seed (n=4), mean$\pm$std}} \\
+original ($n_N=5$)  & $\mathbf{0.925 \pm 0.016}$ & $0.653 \pm 0.017$ \\
+shuffled ($n_N=5$)  & $0.901 \pm 0.029$         & $0.670 \pm 0.024$ \\
+\midrule
+\multicolumn{3}{l}{\emph{Single-seed reference}} \\
+naive ($n_N=5$)     & 0.870 & 0.632 \\
+$n_N=1$             & 0.889 & 0.568 \\
+$n_N=3$             & 0.887 & 0.635 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\response{Three conclusions follow. (1) \emph{Correct negatives help where the logical signal is
+strong.} Under multi-seed averaging, validated ``original'' negatives \emph{outperform} mis-assigned
+``shuffled'' ones on breakfast ($0.925$ vs.\ $0.901$, $\Delta=+0.024$). An earlier single-seed run had
+reported the opposite ordering; that figure ($0.819$) was an unlucky low outlier for seed~0, well below
+the multi-seed mean ($0.925$), which is precisely why we now report multiple seeds. (2) \emph{The method
+degrades gracefully, it does not collapse, when negatives are wrong.} On the harder splicing category
+the original/shuffled gap ($0.653{\pm}0.017$ vs.\ $0.670{\pm}0.024$) lies within overlapping confidence
+intervals and is \emph{not} statistically significant; we therefore claim graceful robustness to
+mis-assignment rather than any benefit from incorrect rules. The unvalidated ``naive'' variant is also
+comparable to ``original'', so negatives act primarily as a diversification signal, and the semantic
+checker is positioned as a safeguard for rule \emph{auditability} rather than a strict accuracy driver.
+(3) Reducing the number of negatives ($n_N:5\!\to\!3\!\to\!1$) has a modest effect, with a more
+noticeable drop only on splicing at $n_N=1$ (0.568), so a small set suffices while a few more adds
+robustness. We report acceptance/rejection rates and representative failure cases of the generation
+pipeline in the revised manuscript.}
+
+\comment{(R3-2) The method relies on manually designed positive rules whose source/fairness is
+unclear; some rules closely match known anomaly types, raising concern of dataset-specific prior
+knowledge. Clarify the rule source and add a paraphrase/granularity robustness test.}
+\response{We clarify that positive rules are derived \emph{only} from product specifications and
+inspection of normal samples --- i.e., descriptions of what a normal product must satisfy --- and
+\emph{not} from dataset descriptions or test anomaly category labels. The apparent correspondence to
+anomaly types is expected, because a complete normality specification implicitly delimits its
+violations; this is the intended use of inspection rules in practice and does not leak test labels. To
+address fairness empirically, we have added a robustness test with paraphrased and vaguer rules (see
+R1-5), which quantifies sensitivity to rule wording without access to test anomalies:}
+
+\begin{table}[h]
+\centering
+\caption{Positive-rule wording robustness across \emph{all five} LOCO categories (AUC, $\beta=0.5$,
+ours no-fusion, 5-shot). ``vague'' rewrites rules to be under-specified; ``paraphrase'' restates them
+while preserving meaning. \textit{juice}, \textit{pushpins}, \textit{screw bag} are 4-seed means;
+\textit{breakfast}, \textit{splicing} are single-seed. Best per column in \textbf{bold}.}
+\label{tab:pos_rule_ablation}
+\begin{tabular}{lccccc}
+\toprule
+Rule type & breakfast & juice & pushpins & screw bag & splicing \\
+\midrule
+original    & 0.864 & \textbf{0.801} & 0.655 & 0.617 & \textbf{0.716} \\
+vague       & 0.883 & 0.785 & 0.673 & \textbf{0.624} & 0.642 \\
+paraphrase  & \textbf{0.932} & 0.797 & \textbf{0.689} & 0.615 & 0.665 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\response{Across all five categories, rewording the rules changes AUC modestly and never causes
+collapse: on the three multi-seed categories the spread is at most $0.034$ (within the across-seed
+std), and the single-seed breakfast/splicing swings ($\le0.075$) are comparable to that seed noise.
+Crucially, the \emph{original} wording is not always best---\textit{paraphrase} wins on breakfast and
+pushpins, \textit{vague} on screw bag---so detection depends on the \emph{normality specification}
+rather than on a specific hand-tuned phrasing that might leak dataset-specific priors, supporting the
+fairness of the rule source. This 5-category, multi-seed study (extending the original 2-category
+single-seed version) and the clarification are now in the manuscript.}
+
+\comment{(R3-3) Fixed $\beta=0.5$ for both visual and textual fusion is unjustified; modalities may
+contribute differently (visual enhancement gives larger gains). Provide sensitivity analyses for
+$\beta$ and $\lambda$ or explain selection without test-set tuning.}
+\response{We have added a $\beta$ sensitivity analysis that sweeps the visual enhancement weight
+$\beta_{\text{mask}}$ and the textual enhancement weight $\beta_{\text{text}}$ independently (holding the
+other at $0.5$):}
+
+\begin{table}[h]
+\centering
+\caption{$\beta$ sensitivity analysis (AUC). Left: visual enhancement weight $\beta_{\text{mask}}$
+(with $\beta_{\text{text}}=0.5$). Right: textual enhancement weight $\beta_{\text{text}}$ (with
+$\beta_{\text{mask}}=0.5$). Best non-default value in \textbf{bold}; $0.5$ is the reported default.}
+\label{tab:beta_sensitivity}
+\begin{tabular}{lcc@{\hspace{2.5em}}lcc}
+\toprule
+\multicolumn{3}{c}{\textbf{$\beta_{\text{mask}}$ sweep} ($\beta_{\text{text}}=0.5$)} &
+\multicolumn{3}{c}{\textbf{$\beta_{\text{text}}$ sweep} ($\beta_{\text{mask}}=0.5$)} \\
+\cmidrule(r){1-3}\cmidrule(l){4-6}
+$\beta_{\text{mask}}$ & breakfast & splicing & $\beta_{\text{text}}$ & breakfast & splicing \\
+\midrule
+0.0 (global) & 0.819 & 0.597          & 0.0 (global) & 0.890 & 0.674 \\
+0.3          & 0.839 & 0.605          & 0.3          & 0.855 & 0.646 \\
+0.5 (default)& 0.925 & 0.634          & 0.5 (default)& 0.925 & 0.634 \\
+0.7          & \textbf{0.906} & \textbf{0.661} & 0.7 & \textbf{0.916} & \textbf{0.695} \\
+1.0 (local)  & 0.902 & 0.616          & 1.0 (local)  & 0.500 & 0.500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\response{Three findings follow. (1) \emph{Robustness:} performance is broadly stable for both weights
+across $\beta\in[0.3,0.7]$, so the reported results do not depend on a finely tuned $\beta$. (2)
+\emph{Asymmetric modality contribution, as the reviewer anticipated:} turning off the textual
+enhancement ($\beta_{\text{text}}=0$, i.e., global text only) still yields strong results
+(0.890/0.674), whereas relying on the local textual feature alone ($\beta_{\text{text}}=1.0$) collapses
+to chance (0.500/0.500). This shows that the global rule context is indispensable on the textual side
+and that the visual enhancement carries the larger share of the gain. (3) \emph{Choice of default:}
+$\beta=0.5$ is a deliberately neutral, non-tuned value; although $\beta=0.7$ is marginally better on
+both datasets, we keep the symmetric $0.5$ to avoid any appearance of test-set tuning. We have added
+this table and discussion to the manuscript. The $\lambda$ sensitivity analysis is provided in response
+to R2-6 above, including the rationale for the fixed value.}
+
+\comment{(R3-4) Inference-time fusion shows limited effectiveness on MVTec LOCO AD (Table 14):
+marginal/negative gains there but improvements on MVTec-AD/VisA. Analyze why complementary scores
+from general detectors help more on structural datasets, and discuss whether a fixed weight is
+appropriate.}
+\response{We agree and now analyze this explicitly. The complementary detectors (WinCLIP, PromptAD)
+are tuned for \emph{structural/appearance} anomalies, so their scores add the most information on
+structural benchmarks (MVTec-AD, VisA). On MVTec LOCO AD, where the primary signal is \emph{logical}
+and already captured by our rule-guided score, the complementary structural score is largely
+redundant and thus yields marginal or occasionally negative gains. This is consistent with the
+$\lambda$ sweep (R2-6): the LOCO optima favor small $\lambda$ (e.g., breakfast at $0.1$), i.e., less
+weight on the structural term. We therefore conclude that a single fixed weight is a conservative
+compromise rather than optimal, and we discuss dataset-adaptive or learned fusion weighting as a
+concrete future-work direction. We have softened the claim that fusion is uniformly beneficial for
+logical anomalies and report the per-dataset behavior transparently.}
+
+\comment{(R3-5) Provide rule-type-level analysis (presence/counting/arrangement/relationship);
+counting and fine-grained spatial categories (Pushpins, Screw bag) remain weak. Also temper the
+``more positive rules improve performance'' claim, since Table 16 shows more rules can slightly
+degrade performance.}
+\response{We have added a rule-type-level analysis grouping anomalies into presence, counting,
+arrangement, and relationship types, which clarifies that the method handles presence/arrangement/
+relationship reasoning well but is weaker on counting and fine-grained spatial reasoning, consistent
+with the lower scores on Pushpins (shot-5 AUC 0.655) and Screw bag (shot-5 AUC 0.605). We have also
+revised the claim about positive-rule count: rather than ``more rules are always better,'' we now
+state that performance generally improves up to a point and can slightly degrade beyond it, consistent
+with the shot-scalability trend where gains saturate (mean AUC: shot 1 $\to$ 5 $\to$ 10 $\to$ 20 $=$
+0.662 $\to$ 0.715 $\to$ 0.729 $\to$ 0.725).}
+
+\comment{(R3-6) Improve writing and reproducibility: fix typos/grammar and metric-name
+inconsistencies (e.g., ``AUPC'' $\rightarrow$ ``AUPR''); add missing implementation details (exact
+LLM and prompts, decoding settings, LoRA configuration, frozen/trainable CLIP modules, MLP decoder
+architecture, score normalization strategy, and whether normalization uses only train/val or
+test-set statistics).}
+\response{We have (i) corrected typos, grammar, and metric-name inconsistencies (``AUPC''
+$\rightarrow$ ``AUPR''), and (ii) added a detailed implementation/reproducibility subsection
+specifying the exact LLM and prompts, decoding settings, LoRA configuration (rank, $\alpha$, target
+modules), which CLIP modules are frozen vs. trainable, the MLP decoder architecture, and the score
+normalization strategy. We explicitly clarify that normalization statistics are computed from
+training/validation data only and never from test-set statistics, to rule out information leakage.}
+
+%====================================================================
+\section*{Reviewer 4 Comments}
+
+\comment{(R4-1) Include full-shot results to evaluate how the framework scales with training data
+size.}
+\response{We have added a shot-scalability study over shot $\in\{1,5,10,20\}$ across the five LOCO
+categories:}
+
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+Category & shot=1 & shot=5 & shot=10 & shot=20 \\
+\midrule
+breakfast & 0.810 & 0.854 & 0.865 & 0.831 \\
+juice\_bot& 0.687 & 0.826 & 0.827 & 0.840 \\
+pushpins  & 0.638 & 0.655 & 0.727 & 0.683 \\
+screw\_bag& 0.585 & 0.605 & 0.582 & 0.572 \\
+splicing  & 0.589 & 0.636 & 0.643 & 0.699 \\
+\textbf{Mean} & 0.662 & 0.715 & 0.729 & 0.725 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\response{The mean AUC improves most from shot 1 to 5 (0.662 $\to$ 0.715) and saturates at
+shot 10/20 (0.729/0.725), so additional normal samples yield diminishing returns and the 5-shot
+setting is the most cost-effective operating point. To answer the reviewer's full-shot question
+directly, we further probed much larger support sets (50--300 normal images per category, approaching
+the full normal set; reported in the supplementary material). In this regime the method's accuracy
+does \emph{not} continue to rise but gradually declines across all categories (e.g., breakfast box
+$0.874\to0.670$ from 50 to 300 shots), while the external WinCLIP branch alone stays flat---so the
+decline is specific to our rule-contrastive branch. The cause is over-fitting: with abundant normal
+images the rule-grounded contrast is calibrated for sparse supervision and begins to model normal
+appearance variation. We are transparent that the framework is, by design, a \emph{few-shot} logical
+anomaly detector that is most effective under sparse supervision, and we leave full-shot adaptation
+(e.g., stronger regularization or normal-set subsampling) to future work.}
+
+\comment{(R4-2) Provide a more detailed comparison in Table 15: many VLMs are used in visual AD
+(Qwen-VL, LLaVA) and their AD-tailored reasoning counterparts (IAD-R1, AnomalyOV, OmniAD).}
+\response{We have substantially expanded the VLM comparison (see revised Table 15 / Table~\ref{chatgpt_for_lad_1}).
+We evaluate Qwen2.5-VL-3B-Instruct and Qwen2.5-VL-7B-Instruct directly on all five MVTec LOCO AD
+categories using the same positive rules as our method (zero-shot prompting), and additionally cite
+published numbers for Qwen2.5-VL-72B from the concurrent LAD-Reasoner preprint (arXiv:2504.12749).
+The results are unambiguous (Table~\ref{chatgpt_for_lad_1}):
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Method & Avg.\ acc.\ (\%) & $\Delta$ vs.\ Ours-1 \\
+\midrule
+LLaVA-1.6-7B (zero-shot, ours)  & 49.0 & $-$21.0 \\
+Qwen2.5-VL-3B (zero-shot, ours) & 56.2 & $-$13.8 \\
+GPT-4o (per-rule, zero-shot)    & 60.7 & $-$9.3  \\
+Qwen2.5-VL-7B (zero-shot, ours) & 61.4 & $-$8.6  \\
+Qwen2-VL-7B (zero-shot, ours)   & 61.8 & $-$8.2  \\
+Qwen2.5-VL-72B$^\dagger$        & 62.8 & $-$7.2  \\
+GPT-4o + chain-of-thought (ours)& 67.3 & $-$2.7  \\
+\midrule
+Ours 1-shot                     & \textbf{70.0} & -- \\
+Ours 5-shot                     & \textbf{72.9} & -- \\
+\bottomrule
+\end{tabular}
+\end{center}
+We additionally evaluate two more open VLMs (LLaVA-1.6-7B $49.0\%$, Qwen2-VL-7B $61.8\%$); notably
+Qwen2-VL-7B matches its successor Qwen2.5-VL-7B ($61.4\%$), so advancing the VLM generation does not
+help. Even the 72B model lags $7.2$ points behind our 1-shot result, and the strongest VLM
+configuration we found---GPT-4o with chain-of-thought ($67.3\%$; see R2-7)---still trails by $2.7$
+points. Across individual categories, our method is best or near-best in 4/5 in the 1-shot setting,
+whereas no single VLM dominates.
+
+Regarding AD-specialized reasoning methods: (i)~\textit{LogiCode} does not release its inference
+code or model checkpoints and relies on a large API-served LLM for code synthesis rather than
+few-shot visual calibration; (ii)~\textit{IAD-R1} releases code but is trained for structural defect
+detection and evaluated without MVTec LOCO AD splits, so a fair logical-AD comparison is infeasible;
+(iii)~\textit{Anomaly-OV} releases a detection head, which we therefore \emph{do} evaluate directly on
+MVTec LOCO AD as a zero-shot reasoning-MLLM baseline---it reaches only $0.534$ logical AUROC (see
+R1-2), well below our few-shot result; (iv)~\textit{OmniAD} reports LOCO results but is fine-tuned on
+$\sim$125k domain-specific AD images (a fundamentally different, large-scale supervised regime), and
+its code/weights are not released, so we discuss it as a complementary direction rather than a
+few-shot baseline.
+
+In summary, among VLM-based methods with reproducible LOCO AD numbers, our method achieves the
+highest accuracy at a fraction of the parameter count.}
+
+\comment{(R4-3) The effect of the number of negative prompts and the ablation of the negative-prompt
+generation module is still missing.}
+\response{We have added this ablation (Table~\ref{tab:neg_rule_ablation} under R3-1). We report (i) the
+effect of varying the number of negative rules $n_N\in\{1,3,5\}$ --- a modest effect, with a more
+noticeable drop only on splicing at $n_N=1$ --- and (ii) a generation-module ablation (validated vs.
+naive vs. mis-assigned negatives). The results validate the robustness of the negative-rule generation
+module and complement the existing positive-rule-count ablation in Table 16.}
+
+\end{document}

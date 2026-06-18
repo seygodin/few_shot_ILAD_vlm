@@ -1,0 +1,256 @@
+{
+  "weights": "mvtec_pretrained.pth",
+  "setting_note": "CROSS-DATASET: adapter trained on MVTec-AD (mvtec_pretrained.pth), evaluated on MVTec LOCO AD. CLIP backbone = OpenAI ViT-L-14-336. No logical-anomaly supervision exists for LOCO.",
+  "model": "ViT-L-14-336",
+  "pretrained": "openai",
+  "image_size": 518,
+  "features_list": [
+    6,
+    12,
+    18,
+    24
+  ],
+  "image_level_score": {
+    "zero_shot": "CLIP text-prob: softmax(100*img_feat@text_feat)[anomaly]",
+    "few_shot": "0.5*(text_prob + minmax_norm_per_category(max(text_seg_map + kNN_dist_map)))"
+  },
+  "categories": [
+    "breakfast_box",
+    "juice_bottle",
+    "pushpins",
+    "screw_bag",
+    "splicing_connectors"
+  ],
+  "zero_shot": {
+    "per_category": {
+      "breakfast_box": {
+        "all_anomalies": 0.5572934376062564,
+        "logical_only": 0.6229033782187573
+      },
+      "juice_bottle": {
+        "all_anomalies": 0.6500405697800217,
+        "logical_only": 0.6541804015582858
+      },
+      "pushpins": {
+        "all_anomalies": 0.5698517020559488,
+        "logical_only": 0.576644370122631
+      },
+      "screw_bag": {
+        "all_anomalies": 0.5170110038176511,
+        "logical_only": 0.45874715807107813
+      },
+      "splicing_connectors": {
+        "all_anomalies": 0.6439892018983759,
+        "logical_only": 0.6512994086523498
+      }
+    },
+    "average": {
+      "all_anomalies": 0.5876371830316508,
+      "logical_only": 0.5927549433246204
+    }
+  },
+  "few_shot": {
+    "k=1": {
+      "seeds": [
+        42,
+        0,
+        123
+      ],
+      "per_seed": {
+        "42": {
+          "breakfast_box": {
+            "all_anomalies": 0.640995126374249,
+            "logical_only": 0.6052445074415308
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.7428777497295348,
+            "logical_only": 0.6779292777944262
+          },
+          "pushpins": {
+            "all_anomalies": 0.5840495449949443,
+            "logical_only": 0.45150501672240806
+          },
+          "screw_bag": {
+            "all_anomalies": 0.5994460663223296,
+            "logical_only": 0.49311954050496587
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.6527191187355772,
+            "logical_only": 0.5742296918767508
+          }
+        },
+        "0": {
+          "breakfast_box": {
+            "all_anomalies": 0.6133401337413578,
+            "logical_only": 0.5676824946846208
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.6437522538766679,
+            "logical_only": 0.5783637998201978
+          },
+          "pushpins": {
+            "all_anomalies": 0.6142146949780923,
+            "logical_only": 0.4927536231884059
+          },
+          "screw_bag": {
+            "all_anomalies": 0.6055468223669436,
+            "logical_only": 0.4996410195046068
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.6255932424783384,
+            "logical_only": 0.5589791472144412
+          }
+        },
+        "123": {
+          "breakfast_box": {
+            "all_anomalies": 0.6178737390910121,
+            "logical_only": 0.5557524214505078
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.6407320591417238,
+            "logical_only": 0.5774647887323945
+          },
+          "pushpins": {
+            "all_anomalies": 0.6089063026626222,
+            "logical_only": 0.4769867813346074
+          },
+          "screw_bag": {
+            "all_anomalies": 0.6058836739276892,
+            "logical_only": 0.49976067966973803
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.6389167065790047,
+            "logical_only": 0.5639589169000934
+          }
+        }
+      },
+      "per_category_mean": {
+        "breakfast_box": {
+          "all_anomalies": 0.6240696664022063,
+          "logical_only": 0.5762264745255532
+        },
+        "juice_bottle": {
+          "all_anomalies": 0.6757873542493088,
+          "logical_only": 0.6112526221156728
+        },
+        "pushpins": {
+          "all_anomalies": 0.6023901808785529,
+          "logical_only": 0.4737484737484738
+        },
+        "screw_bag": {
+          "all_anomalies": 0.6036255208723208,
+          "logical_only": 0.49750707989310355
+        },
+        "splicing_connectors": {
+          "all_anomalies": 0.6390763559309734,
+          "logical_only": 0.5657225853304284
+        }
+      },
+      "average": {
+        "all_anomalies": 0.6289898156666724,
+        "logical_only": 0.5448914471226463
+      }
+    },
+    "k=5": {
+      "seeds": [
+        42,
+        0,
+        123
+      ],
+      "per_seed": {
+        "42": {
+          "breakfast_box": {
+            "all_anomalies": 0.6472288337300238,
+            "logical_only": 0.6022915190172454
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.7751081860800577,
+            "logical_only": 0.724977524722805
+          },
+          "pushpins": {
+            "all_anomalies": 0.5993427704752275,
+            "logical_only": 0.46512183468705204
+          },
+          "screw_bag": {
+            "all_anomalies": 0.6172991990418444,
+            "logical_only": 0.5074787603206893
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.6764488178691166,
+            "logical_only": 0.6008403361344539
+          }
+        },
+        "0": {
+          "breakfast_box": {
+            "all_anomalies": 0.6255808681854244,
+            "logical_only": 0.5770139381053626
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.7647854309412189,
+            "logical_only": 0.7153131555289182
+          },
+          "pushpins": {
+            "all_anomalies": 0.6017441860465116,
+            "logical_only": 0.466395922917662
+          },
+          "screw_bag": {
+            "all_anomalies": 0.6081293509993262,
+            "logical_only": 0.4882733038171593
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.6433578612792267,
+            "logical_only": 0.5612356053532526
+          }
+        },
+        "123": {
+          "breakfast_box": {
+            "all_anomalies": 0.618950470361555,
+            "logical_only": 0.5690999291282778
+          },
+          "juice_bottle": {
+            "all_anomalies": 0.7623512441399207,
+            "logical_only": 0.7148636499850165
+          },
+          "pushpins": {
+            "all_anomalies": 0.6177536231884058,
+            "logical_only": 0.49147953495779584
+          },
+          "screw_bag": {
+            "all_anomalies": 0.6080170671457443,
+            "logical_only": 0.49365801124805553
+          },
+          "splicing_connectors": {
+            "all_anomalies": 0.704967997561719,
+            "logical_only": 0.6227824463118581
+          }
+        }
+      },
+      "per_category_mean": {
+        "breakfast_box": {
+          "all_anomalies": 0.6305867240923343,
+          "logical_only": 0.582801795416962
+        },
+        "juice_bottle": {
+          "all_anomalies": 0.7674149537203991,
+          "logical_only": 0.7183847767455799
+        },
+        "pushpins": {
+          "all_anomalies": 0.606280193236715,
+          "logical_only": 0.47433243085416993
+        },
+        "screw_bag": {
+          "all_anomalies": 0.6111485390623049,
+          "logical_only": 0.4964700251286347
+        },
+        "splicing_connectors": {
+          "all_anomalies": 0.6749248922366874,
+          "logical_only": 0.5949527959331882
+        }
+      },
+      "average": {
+        "all_anomalies": 0.6580710604696882,
+        "logical_only": 0.5733883648157068
+      }
+    }
+  }
+}

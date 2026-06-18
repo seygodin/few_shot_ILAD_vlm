@@ -1,0 +1,64 @@
+{
+  "backbone": "ViT-L-14-336",
+  "pretrained": "openai",
+  "img_resize": 336,
+  "batch_size": 4,
+  "feature_layers": [
+    5,
+    11,
+    17,
+    23
+  ],
+  "r_list": [
+    1,
+    3,
+    5
+  ],
+  "divide_num": 1,
+  "method": "MuSc (ICLR 2024, arXiv:2401.16753), training-free zero-shot, transductive over the test set; train/good NOT used; no class names",
+  "score": "image-level score = max over MuSc anomaly map per image, refined by RsCIN; AUROC via sklearn roc_auc_score",
+  "labels": "good=0; logical_anomalies + structural_anomalies = 1 (all-anomalies). logical-only = logical_anomalies vs good.",
+  "note_resolution": "Backbone is the repo-recommended ViT-L-14-336 (OpenAI CLIP). Default img_resize is 518; we used 336 (also a repo-provided ViT-L-14-336 setting) because GPU 1 was persistently shared with a ~17.8GB co-tenant leaving <7GB free, and MuSc's mutual-similarity (MSM) step OOMs at 518 under that contention. 336 keeps peak GPU memory ~3.6GB. Used the repo's low-memory MSM implementation (compute_scores_slow) via env flag MUSC_MSM_LOWMEM=1.",
+  "device": "CUDA_VISIBLE_DEVICES=1",
+  "per_category": {
+    "breakfast_box": {
+      "auroc_all_anomalies": 81.77,
+      "auroc_logical_only": 81.36,
+      "n_good": 102,
+      "n_logical": 83,
+      "n_structural": 90
+    },
+    "juice_bottle": {
+      "auroc_all_anomalies": 90.08,
+      "auroc_logical_only": 86.71,
+      "n_good": 94,
+      "n_logical": 142,
+      "n_structural": 94
+    },
+    "pushpins": {
+      "auroc_all_anomalies": 66.86,
+      "auroc_logical_only": 57.87,
+      "n_good": 138,
+      "n_logical": 91,
+      "n_structural": 81
+    },
+    "screw_bag": {
+      "auroc_all_anomalies": 68.25,
+      "auroc_logical_only": 55.86,
+      "n_good": 122,
+      "n_logical": 137,
+      "n_structural": 82
+    },
+    "splicing_connectors": {
+      "auroc_all_anomalies": 70.83,
+      "auroc_logical_only": 68.45,
+      "n_good": 119,
+      "n_logical": 108,
+      "n_structural": 85
+    }
+  },
+  "average": {
+    "auroc_all_anomalies": 75.56,
+    "auroc_logical_only": 70.05
+  }
+}
